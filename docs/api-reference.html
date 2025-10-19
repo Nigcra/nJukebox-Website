@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference - nJukebox Documentation</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .doc-container {
+            max-width: 800px;
+            margin: 100px auto 0;
+            padding: 0 20px;
+        }
+        .doc-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .doc-content {
+            background: var(--background-light);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+        .doc-nav {
+            background: var(--background-dark);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .doc-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .doc-nav li {
+            margin-bottom: 10px;
+        }
+        .doc-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        .doc-nav a:hover, .doc-nav a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        h1, h2, h3 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        h2 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .warning, .info, .success {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+        .warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-color: #ffc107;
+        }
+        .info {
+            background: rgba(13, 202, 240, 0.1);
+            border-color: #0dcaf0;
+        }
+        .success {
+            background: rgba(29, 185, 84, 0.1);
+            border-color: var(--primary-color);
+        }
+        pre {
+            background: var(--background-darker);
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        code {
+            color: var(--primary-color);
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        }
+        .endpoint {
+            background: var(--background-dark);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary-color);
+        }
+        .endpoint h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-family: monospace;
+        }
+        .method {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        .method.get { background-color: #28a745; }
+        .method.post { background-color: #007bff; }
+        .method.put { background-color: #ffc107; color: #000; }
+        .method.delete { background-color: #dc3545; }
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .param-table th,
+        .param-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .param-table th {
+            background: var(--background-darker);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .param-table td {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        .response-example {
+            background: var(--background-darker);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .toc {
+            background: var(--background-dark);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .toc ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .toc li {
+            margin-bottom: 8px;
+        }
+        .toc a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .toc a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
+                    <span class="logo">🎵</span>
+                    <span class="brand-name">nJukebox</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../index.html#features" class="nav-link">Features</a>
+                <a href="../index.html#demo" class="nav-link">Demo</a>
+                <a href="../index.html#setup" class="nav-link">Setup</a>
+                <a href="getting-started.html" class="nav-link">Docs</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="doc-container">
+        <div class="doc-header">
+            <h1>📡 API Reference</h1>
+            <p>Complete API documentation for nJukebox integration and development</p>
+        </div>
+
+        <div class="doc-nav">
+            <ul>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="spotify-setup.html">Spotify Setup</a></li>
+                <li><a href="admin-guide.html">Admin Guide</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+                <li><a href="api-reference.html" class="active">API Reference</a></li>
+            </ul>
+        </div>
+
+        <div class="toc">
+            <h3>API Endpoints</h3>
+            <ul>
+                <li><a href="#library-api">Library API</a></li>
+                <li><a href="#playlist-api">Playlist API</a></li>
+                <li><a href="#session-api">Session API</a></li>
+                <li><a href="#admin-api">Admin API</a></li>
+                <li><a href="#spotify-api">Spotify API</a></li>
+                <li><a href="#settings-api">Settings API</a></li>
+                <li><a href="#websocket-api">WebSocket Events</a></li>
+            </ul>
+        </div>
+
+        <div class="doc-content">
+            <h2>Base URL</h2>
+            <p>All API requests are made to:</p>
+            <pre><code>http://localhost:3000/api</code></pre>
+
+            <h2>Authentication</h2>
+            <p>Most endpoints require admin authentication. Include the admin PIN in requests:</p>
+            <pre><code>// Headers
+Authorization: Bearer YOUR_ADMIN_PIN
+
+// Or as query parameter
+?adminPin=YOUR_ADMIN_PIN</code></pre>
+
+            <div class="info">
+                <strong>Public Endpoints:</strong> Some endpoints like library browsing and basic playback are available without authentication for regular users.
+            </div>
+
+            <h2 id="library-api">Library API</h2>
+            <p>Endpoints for browsing and managing the music library.</p>
+
+            <div class="endpoint">
+                <h4><span class="method get">GET</span>/api/library</h4>
+                <p>Get all tracks in the music library.</p>
+                
+                <h5>Query Parameters</h5>
+                <table class="param-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>genre</td>
+                        <td>string</td>
+                        <td>Filter by genre</td>
+                    </tr>
+                    <tr>
+                        <td>decade</td>
+                        <td>string</td>
+                        <td>Filter by decade (1980s, 1990s, etc.)</td>
+                    </tr>
+                    <tr>
+                        <td>search</td>
+                        <td>string</td>
+                        <td>Search in title, artist, or album</td>
+                    </tr>
+                    <tr>
+                        <td>limit</td>
+                        <td>number</td>
+                        <td>Maximum number of results</td>
+                    </tr>
+                    <tr>
+                        <td>offset</td>
+                        <td>number</td>
+                        <td>Number of results to skip</td>
+                    </tr>
+                </table>
+
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "tracks": [
+    {
+      "id": 123,
+      "title": "Song Title",
+      "artist": "Artist Name",
+      "album": "Album Name",
+      "genre": "Pop",
+      "year": 2020,
+      "duration": 210,
+      "file_path": "/music/artist/song.mp3",
+      "cover_url": "/covers/123.jpg",
+      "play_count": 5,
+      "last_played": "2024-01-15T10:30:00Z"
+    }
+  ],
+  "total": 1250,
+  "page": 1,
+  "limit": 50
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method get">GET</span>/api/library/{id}</h4>
+                <p>Get details for a specific track.</p>
+                
+                <h5>Path Parameters</h5>
+                <table class="param-table">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>number</td>
+                        <td>Track ID</td>
+                    </tr>
+                </table>
+
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "id": 123,
+  "title": "Song Title",
+  "artist": "Artist Name",
+  "album": "Album Name",
+  "genre": "Pop",
+  "year": 2020,
+  "duration": 210,
+  "file_path": "/music/artist/song.mp3",
+  "cover_url": "/covers/123.jpg",
+  "play_count": 5,
+  "last_played": "2024-01-15T10:30:00Z",
+  "is_local": true,
+  "spotify_id": null
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/library/scan</h4>
+                <p>Trigger a library rescan. Requires admin authentication.</p>
+                
+                <h5>Request Body</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "force": false,
+  "delete_missing": true
+}</code></pre>
+                </div>
+
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "scan_started",
+  "scan_id": "scan_20240115_103000",
+  "estimated_time": 120
+}</code></pre>
+                </div>
+            </div>
+
+            <h2 id="playlist-api">Playlist API</h2>
+            <p>Manage the current playlist and queue.</p>
+
+            <div class="endpoint">
+                <h4><span class="method get">GET</span>/api/playlist</h4>
+                <p>Get the current playlist.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "tracks": [
+    {
+      "id": 123,
+      "title": "Song Title",
+      "artist": "Artist Name",
+      "duration": 210,
+      "position": 0,
+      "added_by": "user",
+      "added_at": "2024-01-15T10:30:00Z"
+    }
+  ],
+  "current_track": 0,
+  "is_playing": true,
+  "total_duration": 1800
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/playlist/add</h4>
+                <p>Add a track to the playlist.</p>
+                
+                <h5>Request Body</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "track_id": 123,
+  "position": "end"
+}</code></pre>
+                </div>
+
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "added",
+  "position": 5,
+  "message": "Track added to playlist"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method delete">DELETE</span>/api/playlist/{position}</h4>
+                <p>Remove a track from the playlist. Requires admin authentication.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "removed",
+  "message": "Track removed from playlist"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/playlist/clear</h4>
+                <p>Clear the entire playlist. Requires admin authentication.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "cleared",
+  "message": "Playlist cleared"
+}</code></pre>
+                </div>
+            </div>
+
+            <h2 id="session-api">Session API</h2>
+            <p>Manage playback and session state.</p>
+
+            <div class="endpoint">
+                <h4><span class="method get">GET</span>/api/session/status</h4>
+                <p>Get current playback status.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "is_playing": true,
+  "current_track": {
+    "id": 123,
+    "title": "Song Title",
+    "artist": "Artist Name",
+    "position": 45.6,
+    "duration": 210
+  },
+  "volume": 0.8,
+  "shuffle": false,
+  "repeat": false,
+  "muted": false
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/session/play</h4>
+                <p>Start playback. Requires admin authentication.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "playing",
+  "track": {
+    "id": 123,
+    "title": "Song Title"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/session/pause</h4>
+                <p>Pause playback. Requires admin authentication.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "paused"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/session/skip</h4>
+                <p>Skip to next track. Requires admin authentication.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "skipped",
+  "next_track": {
+    "id": 124,
+    "title": "Next Song"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/session/volume</h4>
+                <p>Set playback volume. Requires admin authentication.</p>
+                
+                <h5>Request Body</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "volume": 0.8
+}</code></pre>
+                </div>
+
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "volume_set",
+  "volume": 0.8
+}</code></pre>
+                </div>
+            </div>
+
+            <h2 id="admin-api">Admin API</h2>
+            <p>Administrative functions and system management.</p>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/admin/login</h4>
+                <p>Authenticate as admin.</p>
+                
+                <h5>Request Body</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "pin": "1234"
+}</code></pre>
+                </div>
+
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "authenticated",
+  "token": "admin_session_token",
+  "expires_at": "2024-01-15T11:30:00Z"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/admin/logout</h4>
+                <p>End admin session.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "logged_out"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method get">GET</span>/api/admin/system</h4>
+                <p>Get system information and statistics.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "version": "1.0.0",
+  "uptime": 3600,
+  "memory_usage": {
+    "used": 156,
+    "total": 512
+  },
+  "library_stats": {
+    "total_tracks": 1250,
+    "total_artists": 95,
+    "total_albums": 180,
+    "total_duration": 75600
+  },
+  "session_stats": {
+    "tracks_played": 25,
+    "session_duration": 1800
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <h2 id="spotify-api">Spotify API</h2>
+            <p>Spotify integration endpoints.</p>
+
+            <div class="endpoint">
+                <h4><span class="method get">GET</span>/api/spotify/status</h4>
+                <p>Get Spotify connection status.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "connected": true,
+  "user": {
+    "id": "spotify_user_id",
+    "display_name": "User Name",
+    "premium": true
+  },
+  "device": {
+    "id": "device_id",
+    "name": "nJukebox Player",
+    "active": true
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method post">POST</span>/api/spotify/search</h4>
+                <p>Search Spotify catalog.</p>
+                
+                <h5>Request Body</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "query": "song title artist",
+  "type": "track",
+  "limit": 20
+}</code></pre>
+                </div>
+
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "tracks": [
+    {
+      "id": "spotify:track:123",
+      "title": "Song Title",
+      "artist": "Artist Name",
+      "album": "Album Name",
+      "duration": 210,
+      "preview_url": "https://...",
+      "external_urls": {
+        "spotify": "https://open.spotify.com/track/123"
+      }
+    }
+  ]
+}</code></pre>
+                </div>
+            </div>
+
+            <h2 id="settings-api">Settings API</h2>
+            <p>Configuration and settings management.</p>
+
+            <div class="endpoint">
+                <h4><span class="method get">GET</span>/api/settings</h4>
+                <p>Get current settings. Requires admin authentication.</p>
+                
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "audio": {
+    "volume": 0.8,
+    "track_lock_time": 10,
+    "auto_dj": true
+  },
+  "visualization": {
+    "enabled": true,
+    "effects": ["space", "fire"],
+    "switch_interval": 30
+  },
+  "language": "en"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4><span class="method put">PUT</span>/api/settings</h4>
+                <p>Update settings. Requires admin authentication.</p>
+                
+                <h5>Request Body</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "audio": {
+    "volume": 0.9,
+    "track_lock_time": 15
+  },
+  "language": "de"
+}</code></pre>
+                </div>
+
+                <h5>Response</h5>
+                <div class="response-example">
+                    <pre><code>{
+  "status": "updated",
+  "message": "Settings saved successfully"
+}</code></pre>
+                </div>
+            </div>
+
+            <h2 id="websocket-api">WebSocket Events</h2>
+            <p>Real-time events via WebSocket connection.</p>
+
+            <h3>Connection</h3>
+            <pre><code>ws://localhost:3000/ws</code></pre>
+
+            <h3>Event Types</h3>
+
+            <div class="endpoint">
+                <h4>track_started</h4>
+                <p>Fired when a new track begins playing.</p>
+                <div class="response-example">
+                    <pre><code>{
+  "event": "track_started",
+  "data": {
+    "track": {
+      "id": 123,
+      "title": "Song Title",
+      "artist": "Artist Name",
+      "duration": 210
+    },
+    "timestamp": "2024-01-15T10:30:00Z"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4>track_ended</h4>
+                <p>Fired when a track finishes playing.</p>
+                <div class="response-example">
+                    <pre><code>{
+  "event": "track_ended",
+  "data": {
+    "track_id": 123,
+    "duration_played": 210,
+    "timestamp": "2024-01-15T10:33:30Z"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4>playlist_updated</h4>
+                <p>Fired when the playlist is modified.</p>
+                <div class="response-example">
+                    <pre><code>{
+  "event": "playlist_updated",
+  "data": {
+    "action": "track_added",
+    "track_id": 124,
+    "position": 3,
+    "total_tracks": 8
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4>library_updated</h4>
+                <p>Fired when the library is rescanned.</p>
+                <div class="response-example">
+                    <pre><code>{
+  "event": "library_updated",
+  "data": {
+    "tracks_added": 15,
+    "tracks_removed": 2,
+    "total_tracks": 1250,
+    "scan_duration": 45
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <h2>Error Responses</h2>
+            <p>All endpoints may return the following error responses:</p>
+
+            <div class="endpoint">
+                <h4>400 Bad Request</h4>
+                <div class="response-example">
+                    <pre><code>{
+  "error": "Bad Request",
+  "message": "Invalid parameters",
+  "details": {
+    "field": "track_id",
+    "issue": "must be a number"
+  }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4>401 Unauthorized</h4>
+                <div class="response-example">
+                    <pre><code>{
+  "error": "Unauthorized",
+  "message": "Admin authentication required"
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4>404 Not Found</h4>
+                <div class="response-example">
+                    <pre><code>{
+  "error": "Not Found",
+  "message": "Track not found",
+  "track_id": 999
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="endpoint">
+                <h4>500 Internal Server Error</h4>
+                <div class="response-example">
+                    <pre><code>{
+  "error": "Internal Server Error",
+  "message": "Database connection failed",
+  "request_id": "req_123456"
+}</code></pre>
+                </div>
+            </div>
+
+            <h2>Rate Limiting</h2>
+            <p>API endpoints are rate limited to prevent abuse:</p>
+            <ul>
+                <li><strong>General endpoints:</strong> 100 requests per minute</li>
+                <li><strong>Search endpoints:</strong> 30 requests per minute</li>
+                <li><strong>Admin endpoints:</strong> 200 requests per minute</li>
+                <li><strong>Playback control:</strong> 10 requests per minute</li>
+            </ul>
+
+            <div class="warning">
+                <strong>Rate Limit Headers:</strong> Check the <code>X-RateLimit-Remaining</code> and <code>X-RateLimit-Reset</code> headers to monitor your usage.
+            </div>
+
+            <h2>SDK and Libraries</h2>
+
+            <h3>JavaScript/Node.js</h3>
+            <pre><code>// Example usage with fetch
+const api = {
+  baseUrl: 'http://localhost:3000/api',
+  
+  async getLibrary() {
+    const response = await fetch(`${this.baseUrl}/library`);
+    return response.json();
+  },
+  
+  async addToPlaylist(trackId) {
+    const response = await fetch(`${this.baseUrl}/playlist/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ track_id: trackId })
+    });
+    return response.json();
+  }
+};</code></pre>
+
+            <h3>Python</h3>
+            <pre><code>import requests
+
+class NJukeboxAPI:
+    def __init__(self, base_url='http://localhost:3000/api'):
+        self.base_url = base_url
+        self.session = requests.Session()
+    
+    def get_library(self):
+        response = self.session.get(f'{self.base_url}/library')
+        return response.json()
+    
+    def add_to_playlist(self, track_id):
+        data = {'track_id': track_id}
+        response = self.session.post(f'{self.base_url}/playlist/add', json=data)
+        return response.json()</code></pre>
+
+            <div class="success">
+                <strong>API Client:</strong> Consider creating a wrapper library for your preferred programming language to simplify integration with nJukebox.
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

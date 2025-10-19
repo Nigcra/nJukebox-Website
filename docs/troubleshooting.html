@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting - nJukebox Documentation</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .doc-container {
+            max-width: 800px;
+            margin: 100px auto 0;
+            padding: 0 20px;
+        }
+        .doc-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .doc-content {
+            background: var(--background-light);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+        .doc-nav {
+            background: var(--background-dark);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .doc-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .doc-nav li {
+            margin-bottom: 10px;
+        }
+        .doc-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        .doc-nav a:hover, .doc-nav a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        h1, h2, h3 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        h2 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .warning, .info, .success, .error {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+        .warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-color: #ffc107;
+        }
+        .info {
+            background: rgba(13, 202, 240, 0.1);
+            border-color: #0dcaf0;
+        }
+        .success {
+            background: rgba(29, 185, 84, 0.1);
+            border-color: var(--primary-color);
+        }
+        .error {
+            background: rgba(220, 53, 69, 0.1);
+            border-color: #dc3545;
+        }
+        pre {
+            background: var(--background-darker);
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        code {
+            color: var(--primary-color);
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        }
+        .troubleshoot-item {
+            background: var(--background-dark);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid var(--primary-color);
+        }
+        .troubleshoot-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-good { background-color: var(--primary-color); }
+        .status-warning { background-color: #ffc107; }
+        .status-error { background-color: #dc3545; }
+        .diagnostic-checklist {
+            background: var(--background-dark);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .diagnostic-checklist input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .diagnostic-checklist label {
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
+                    <span class="logo">🎵</span>
+                    <span class="brand-name">nJukebox</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../index.html#features" class="nav-link">Features</a>
+                <a href="../index.html#demo" class="nav-link">Demo</a>
+                <a href="../index.html#setup" class="nav-link">Setup</a>
+                <a href="getting-started.html" class="nav-link">Docs</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="doc-container">
+        <div class="doc-header">
+            <h1>🔧 Troubleshooting</h1>
+            <p>Common issues and solutions for nJukebox problems</p>
+        </div>
+
+        <div class="doc-nav">
+            <ul>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="spotify-setup.html">Spotify Setup</a></li>
+                <li><a href="admin-guide.html">Admin Guide</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+                <li><a href="troubleshooting.html" class="active">Troubleshooting</a></li>
+                <li><a href="api-reference.html">API Reference</a></li>
+            </ul>
+        </div>
+
+        <div class="doc-content">
+            <h2>Quick Diagnostics</h2>
+            <p>Start with this checklist to identify common issues:</p>
+
+            <div class="diagnostic-checklist">
+                <h4>System Status Check</h4>
+                <p><input type="checkbox" id="server-running"><label for="server-running">nJukebox server is running</label></p>
+                <p><input type="checkbox" id="browser-access"><label for="browser-access">Can access http://localhost:3000 in browser</label></p>
+                <p><input type="checkbox" id="music-files"><label for="music-files">Music files exist in the /music directory</label></p>
+                <p><input type="checkbox" id="admin-access"><label for="admin-access">Admin panel accessible with PIN</label></p>
+                <p><input type="checkbox" id="library-visible"><label for="library-visible">Music library shows tracks</label></p>
+                <p><input type="checkbox" id="audio-playback"><label for="audio-playback">Audio plays when track is selected</label></p>
+            </div>
+
+            <h2>Common Issues</h2>
+
+            <div class="troubleshoot-item">
+                <h4>🚫 Cannot Start nJukebox Server</h4>
+                <p><strong>Symptoms:</strong> Error messages when running startup scripts, server won't start</p>
+                <p><strong>Causes & Solutions:</strong></p>
+                <ul>
+                    <li><strong>Port already in use:</strong> Another application is using port 3000
+                        <pre><code># Find what's using port 3000
+netstat -ano | findstr :3000
+# Kill the process using task manager or change port in config.json</code></pre>
+                    </li>
+                    <li><strong>Missing Node.js:</strong> Node.js not installed or not in PATH
+                        <pre><code># Check Node.js installation
+node --version
+npm --version</code></pre>
+                    </li>
+                    <li><strong>Missing dependencies:</strong> NPM packages not installed
+                        <pre><code>npm install</code></pre>
+                    </li>
+                    <li><strong>Permission issues:</strong> Script can't access files/directories
+                        <pre><code># Run as administrator or check file permissions</code></pre>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="troubleshoot-item">
+                <h4>🎵 No Music Shows in Library</h4>
+                <p><strong>Symptoms:</strong> Library is empty, no tracks visible, "No tracks found" message</p>
+                <p><strong>Causes & Solutions:</strong></p>
+                <ul>
+                    <li><strong>Empty music directory:</strong> No MP3 files in /music folder
+                        <ul>
+                            <li>Add MP3 files to the music directory</li>
+                            <li>Supported formats: MP3, FLAC, M4A, OGG</li>
+                        </ul>
+                    </li>
+                    <li><strong>Database not scanned:</strong> Music database needs to be built
+                        <ul>
+                            <li>Use Admin Panel → Settings → "Rescan Music"</li>
+                            <li>Wait for scan to complete (check console output)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Database corruption:</strong> Music database is corrupted
+                        <ul>
+                            <li>Delete data/music.db</li>
+                            <li>Restart server and rescan music</li>
+                        </ul>
+                    </li>
+                    <li><strong>File permissions:</strong> Server can't read music files
+                        <ul>
+                            <li>Check folder permissions</li>
+                            <li>Ensure server has read access to music directory</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="troubleshoot-item">
+                <h4>🔇 No Audio Playback</h4>
+                <p><strong>Symptoms:</strong> Music appears to play but no sound, audio controls don't work</p>
+                <p><strong>Causes & Solutions:</strong></p>
+                <ul>
+                    <li><strong>Browser autoplay policy:</strong> Browser blocks autoplay
+                        <ul>
+                            <li>Click anywhere on the page to enable audio</li>
+                            <li>Allow autoplay for localhost in browser settings</li>
+                        </ul>
+                    </li>
+                    <li><strong>Audio codec issues:</strong> Browser can't decode audio format
+                        <ul>
+                            <li>Test with different MP3 files</li>
+                            <li>Convert problematic files to standard MP3</li>
+                        </ul>
+                    </li>
+                    <li><strong>CORS issues:</strong> Cross-origin restrictions blocking audio
+                        <ul>
+                            <li>Ensure accessing via localhost:3000, not file://</li>
+                            <li>Check console for CORS errors</li>
+                        </ul>
+                    </li>
+                    <li><strong>System audio:</strong> Computer audio is muted or low
+                        <ul>
+                            <li>Check system volume</li>
+                            <li>Test audio with other applications</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="troubleshoot-item">
+                <h4>🔐 Cannot Access Admin Panel</h4>
+                <p><strong>Symptoms:</strong> Admin PIN doesn't work, lock icon doesn't respond</p>
+                <p><strong>Causes & Solutions:</strong></p>
+                <ul>
+                    <li><strong>Wrong PIN:</strong> Using incorrect admin PIN
+                        <ul>
+                            <li>Default PIN is 1234</li>
+                            <li>Check config.json for custom PIN</li>
+                        </ul>
+                    </li>
+                    <li><strong>JavaScript errors:</strong> Browser errors preventing admin panel
+                        <ul>
+                            <li>Open browser developer tools (F12)</li>
+                            <li>Check Console tab for errors</li>
+                            <li>Reload page and try again</li>
+                        </ul>
+                    </li>
+                    <li><strong>Session timeout:</strong> Admin session has expired
+                        <ul>
+                            <li>Refresh page and log in again</li>
+                            <li>Increase sessionTimeout in config.json</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="troubleshoot-item">
+                <h4>🎤 Spotify Connection Issues</h4>
+                <p><strong>Symptoms:</strong> Cannot connect to Spotify, authentication fails</p>
+                <p><strong>Causes & Solutions:</strong></p>
+                <ul>
+                    <li><strong>Invalid Client ID:</strong> Spotify credentials not configured
+                        <ul>
+                            <li>Check Spotify Developer Dashboard</li>
+                            <li>Verify Client ID in config.json</li>
+                            <li>Ensure redirect URI matches exactly</li>
+                        </ul>
+                    </li>
+                    <li><strong>Spotify Premium required:</strong> Free accounts can't use Web Playback API
+                        <ul>
+                            <li>Upgrade to Spotify Premium</li>
+                            <li>Use local music only if needed</li>
+                        </ul>
+                    </li>
+                    <li><strong>Network connectivity:</strong> Cannot reach Spotify servers
+                        <ul>
+                            <li>Check internet connection</li>
+                            <li>Verify firewall allows outbound HTTPS</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <h2>Performance Issues</h2>
+
+            <div class="troubleshoot-item">
+                <h4>⏳ Slow Library Loading</h4>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Large music libraries take time to scan initially</li>
+                    <li>Subsequent loads use cached data and are faster</li>
+                    <li>Consider organizing music into smaller subdirectories</li>
+                    <li>Disable auto-scan for very large libraries</li>
+                </ul>
+            </div>
+
+            <div class="troubleshoot-item">
+                <h4>💾 High Memory Usage</h4>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Restart nJukebox server periodically</li>
+                    <li>Clear cover cache from admin panel</li>
+                    <li>Reduce library scan interval</li>
+                    <li>Limit playlist size in config.json</li>
+                </ul>
+            </div>
+
+            <h2>Browser-Specific Issues</h2>
+
+            <h3>Chrome/Edge Issues</h3>
+            <div class="info">
+                <ul>
+                    <li><strong>Autoplay:</strong> May require user interaction before audio plays</li>
+                    <li><strong>File limits:</strong> Very large libraries may hit memory limits</li>
+                    <li><strong>CORS:</strong> Strict cross-origin policies</li>
+                </ul>
+            </div>
+
+            <h3>Firefox Issues</h3>
+            <div class="info">
+                <ul>
+                    <li><strong>Audio formats:</strong> Limited codec support compared to Chrome</li>
+                    <li><strong>Performance:</strong> May be slower with large visualizations</li>
+                    <li><strong>Extensions:</strong> Ad blockers may interfere</li>
+                </ul>
+            </div>
+
+            <h3>Safari Issues</h3>
+            <div class="warning">
+                <ul>
+                    <li><strong>Limited support:</strong> Some features may not work properly</li>
+                    <li><strong>Audio codecs:</strong> Strict format requirements</li>
+                    <li><strong>Web technologies:</strong> May not support latest web APIs</li>
+                </ul>
+            </div>
+
+            <h2>Network Issues</h2>
+
+            <div class="troubleshoot-item">
+                <h4>🌐 Cannot Access from Other Devices</h4>
+                <p><strong>Solutions:</strong></p>
+                <ol>
+                    <li>Change <code>host</code> from "localhost" to "0.0.0.0" in config.json</li>
+                    <li>Configure Windows Firewall to allow port 3000</li>
+                    <li>Find your computer's IP address: <code>ipconfig</code></li>
+                    <li>Access from other devices using: <code>http://YOUR_IP:3000</code></li>
+                </ol>
+            </div>
+
+            <div class="troubleshoot-item">
+                <h4>🚪 Firewall Blocking Connection</h4>
+                <p><strong>Windows Firewall Configuration:</strong></p>
+                <ol>
+                    <li>Open Windows Defender Firewall</li>
+                    <li>Click "Allow an app or feature through Windows Defender Firewall"</li>
+                    <li>Click "Change Settings" then "Allow another app..."</li>
+                    <li>Browse to Node.js executable or add port 3000</li>
+                    <li>Enable for both Private and Public networks</li>
+                </ol>
+            </div>
+
+            <h2>Database Issues</h2>
+
+            <div class="troubleshoot-item">
+                <h4>🗄️ Database Corruption</h4>
+                <p><strong>Symptoms:</strong> Server crashes, data loss, SQLite errors</p>
+                <p><strong>Recovery Steps:</strong></p>
+                <ol>
+                    <li>Stop nJukebox server</li>
+                    <li>Backup current database files</li>
+                    <li>Delete corrupted .db files from /data directory</li>
+                    <li>Restart server (creates new databases)</li>
+                    <li>Rescan music library from admin panel</li>
+                    <li>Reconfigure settings as needed</li>
+                </ol>
+            </div>
+
+            <h2>Error Messages</h2>
+
+            <div class="error">
+                <h4>"EADDRINUSE: address already in use"</h4>
+                <p>Port 3000 is being used by another application. Either close the other application or change the port in config.json.</p>
+            </div>
+
+            <div class="error">
+                <h4>"Cannot find module 'express'"</h4>
+                <p>Dependencies are not installed. Run <code>npm install</code> in the nJukebox directory.</p>
+            </div>
+
+            <div class="error">
+                <h4>"SQLITE_CORRUPT: database disk image is malformed"</h4>
+                <p>Database is corrupted. Delete the .db files and restart to rebuild the database.</p>
+            </div>
+
+            <div class="error">
+                <h4>"Failed to load resource: net::ERR_CONNECTION_REFUSED"</h4>
+                <p>Cannot connect to the server. Ensure nJukebox server is running and accessible.</p>
+            </div>
+
+            <h2>Log Analysis</h2>
+
+            <h3>Enabling Debug Mode</h3>
+            <p>Enable detailed logging to diagnose issues:</p>
+            <ol>
+                <li>Set <code>"debug": true</code> in config.json</li>
+                <li>Restart nJukebox server</li>
+                <li>Open browser developer tools (F12)</li>
+                <li>Check Console tab for detailed messages</li>
+                <li>Monitor server terminal for backend logs</li>
+            </ol>
+
+            <h3>Common Log Messages</h3>
+            <ul>
+                <li><strong>"Music scan completed":</strong> <span class="status-indicator status-good"></span> Library scan finished successfully</li>
+                <li><strong>"Spotify token refreshed":</strong> <span class="status-indicator status-good"></span> Spotify authentication working</li>
+                <li><strong>"Database error":</strong> <span class="status-indicator status-error"></span> Database connection or query failed</li>
+                <li><strong>"CORS error":</strong> <span class="status-indicator status-warning"></span> Cross-origin request blocked</li>
+                <li><strong>"Audio context suspended":</strong> <span class="status-indicator status-warning"></span> Browser autoplay restriction</li>
+            </ul>
+
+            <h2>Getting Help</h2>
+
+            <h3>Information to Gather</h3>
+            <p>When seeking help, collect this information:</p>
+            <ul>
+                <li>Operating system and version</li>
+                <li>Node.js and npm versions</li>
+                <li>Browser and version</li>
+                <li>nJukebox version/commit</li>
+                <li>Complete error messages</li>
+                <li>Console logs (browser F12)</li>
+                <li>Server terminal output</li>
+                <li>Configuration files (remove sensitive data)</li>
+            </ul>
+
+            <h3>Safe Mode Testing</h3>
+            <p>Test with minimal configuration:</p>
+            <ol>
+                <li>Use default config.json settings</li>
+                <li>Test with a small number of MP3 files</li>
+                <li>Disable Spotify integration</li>
+                <li>Test in Chrome with no extensions</li>
+                <li>Access only via localhost:3000</li>
+            </ol>
+
+            <div class="success">
+                <strong>Still Need Help?</strong> If issues persist after trying these solutions, gather the diagnostic information above and consult the project documentation or community support resources.
+            </div>
+
+            <h2>Preventive Maintenance</h2>
+
+            <h3>Regular Tasks</h3>
+            <ul>
+                <li><strong>Weekly:</strong> Clear cover cache if using many tracks</li>
+                <li><strong>Monthly:</strong> Backup database files</li>
+                <li><strong>After updates:</strong> Test all functionality</li>
+                <li><strong>Before events:</strong> Full system test and backup</li>
+            </ul>
+
+            <h3>System Health Monitoring</h3>
+            <ul>
+                <li>Monitor disk space (covers and cache can grow)</li>
+                <li>Check memory usage during long sessions</li>
+                <li>Verify network connectivity for Spotify features</li>
+                <li>Test admin access periodically</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration - nJukebox Documentation</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .doc-container {
+            max-width: 800px;
+            margin: 100px auto 0;
+            padding: 0 20px;
+        }
+        .doc-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .doc-content {
+            background: var(--background-light);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+        .doc-nav {
+            background: var(--background-dark);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .doc-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .doc-nav li {
+            margin-bottom: 10px;
+        }
+        .doc-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        .doc-nav a:hover, .doc-nav a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        h1, h2, h3 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        h2 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .warning, .info, .success {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+        .warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-color: #ffc107;
+        }
+        .info {
+            background: rgba(13, 202, 240, 0.1);
+            border-color: #0dcaf0;
+        }
+        .success {
+            background: rgba(29, 185, 84, 0.1);
+            border-color: var(--primary-color);
+        }
+        pre {
+            background: var(--background-darker);
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        code {
+            color: var(--primary-color);
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        }
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .config-table th,
+        .config-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+        .config-table th {
+            background: var(--background-dark);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .config-table td {
+            color: var(--text-secondary);
+        }
+        .file-structure {
+            background: var(--background-darker);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            color: var(--text-secondary);
+        }
+        .file-structure .folder {
+            color: #6ab7ff;
+        }
+        .file-structure .file {
+            color: #a6e22e;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
+                    <span class="logo">🎵</span>
+                    <span class="brand-name">nJukebox</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../index.html#features" class="nav-link">Features</a>
+                <a href="../index.html#demo" class="nav-link">Demo</a>
+                <a href="../index.html#setup" class="nav-link">Setup</a>
+                <a href="getting-started.html" class="nav-link">Docs</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="doc-container">
+        <div class="doc-header">
+            <h1>⚙️ Configuration</h1>
+            <p>Advanced configuration and customization options for nJukebox</p>
+        </div>
+
+        <div class="doc-nav">
+            <ul>
+                <li><a href="getting-started.html">Getting Started</a></li>
+                <li><a href="spotify-setup.html">Spotify Setup</a></li>
+                <li><a href="admin-guide.html">Admin Guide</a></li>
+                <li><a href="configuration.html" class="active">Configuration</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+                <li><a href="api-reference.html">API Reference</a></li>
+            </ul>
+        </div>
+
+        <div class="doc-content">
+            <h2>Configuration Files</h2>
+            <p>nJukebox uses several configuration files to customize behavior and settings:</p>
+
+            <div class="file-structure">
+<span class="folder">nJukebox/</span>
+├── <span class="file">config.json</span>           # Main application configuration
+├── <span class="file">package.json</span>          # Node.js dependencies and scripts
+├── <span class="folder">data/</span>
+│   ├── <span class="file">app.db</span>             # Application database (SQLite)
+│   ├── <span class="file">music.db</span>           # Music library database
+│   └── <span class="file">custom_playlists.json</span> # Saved custom playlists
+├── <span class="folder">locales/</span>
+│   ├── <span class="file">en.json</span>            # English translations
+│   └── <span class="file">de.json</span>            # German translations
+└── <span class="folder">lib/</span>
+    └── <span class="file">valid_genres.js</span>    # Supported music genres
+            </div>
+
+            <h2>Main Configuration (config.json)</h2>
+            <p>The main configuration file contains core application settings:</p>
+
+            <pre><code>{
+  "app": {
+    "port": 3000,
+    "host": "localhost",
+    "adminPin": "1234",
+    "sessionTimeout": 3600,
+    "maxPlaylistSize": 100
+  },
+  "audio": {
+    "defaultVolume": 0.8,
+    "fadeTime": 3000,
+    "trackLockTime": 10,
+    "autoDJ": true
+  },
+  "spotify": {
+    "clientId": "",
+    "clientSecret": "",
+    "redirectUri": "http://localhost:3000/spotify-callback"
+  },
+  "library": {
+    "musicPath": "./music",
+    "supportedFormats": [".mp3", ".flac", ".m4a", ".ogg"],
+    "autoScan": true,
+    "scanInterval": 300000
+  },
+  "visualization": {
+    "enabled": true,
+    "effects": ["space", "fire", "particles", "circles"],
+    "switchInterval": 30
+  },
+  "reporting": {
+    "enabled": true,
+    "gemaCompliance": true,
+    "logDetail": "detailed"
+  }
+}</code></pre>
+
+            <h2>Configuration Options</h2>
+
+            <h3>Application Settings</h3>
+            <table class="config-table">
+                <thead>
+                    <tr>
+                        <th>Setting</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>port</code></td>
+                        <td>3000</td>
+                        <td>Web server port</td>
+                    </tr>
+                    <tr>
+                        <td><code>host</code></td>
+                        <td>localhost</td>
+                        <td>Bind address (use 0.0.0.0 for network access)</td>
+                    </tr>
+                    <tr>
+                        <td><code>adminPin</code></td>
+                        <td>1234</td>
+                        <td>Admin panel access code</td>
+                    </tr>
+                    <tr>
+                        <td><code>sessionTimeout</code></td>
+                        <td>3600</td>
+                        <td>Admin session timeout (seconds)</td>
+                    </tr>
+                    <tr>
+                        <td><code>maxPlaylistSize</code></td>
+                        <td>100</td>
+                        <td>Maximum tracks in playlist</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Audio Settings</h3>
+            <table class="config-table">
+                <thead>
+                    <tr>
+                        <th>Setting</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>defaultVolume</code></td>
+                        <td>0.8</td>
+                        <td>Default audio volume (0.0-1.0)</td>
+                    </tr>
+                    <tr>
+                        <td><code>fadeTime</code></td>
+                        <td>3000</td>
+                        <td>Crossfade duration (milliseconds)</td>
+                    </tr>
+                    <tr>
+                        <td><code>trackLockTime</code></td>
+                        <td>10</td>
+                        <td>Minutes to lock recently played tracks</td>
+                    </tr>
+                    <tr>
+                        <td><code>autoDJ</code></td>
+                        <td>true</td>
+                        <td>Automatically add tracks when playlist is empty</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Library Settings</h3>
+            <table class="config-table">
+                <thead>
+                    <tr>
+                        <th>Setting</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>musicPath</code></td>
+                        <td>./music</td>
+                        <td>Path to music directory</td>
+                    </tr>
+                    <tr>
+                        <td><code>supportedFormats</code></td>
+                        <td>[".mp3", ".flac", ".m4a", ".ogg"]</td>
+                        <td>Supported audio file formats</td>
+                    </tr>
+                    <tr>
+                        <td><code>autoScan</code></td>
+                        <td>true</td>
+                        <td>Automatically scan for new music</td>
+                    </tr>
+                    <tr>
+                        <td><code>scanInterval</code></td>
+                        <td>300000</td>
+                        <td>Auto-scan interval (milliseconds)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Environment Variables</h2>
+            <p>You can override configuration settings using environment variables:</p>
+
+            <pre><code># Server Configuration
+NJUKEBOX_PORT=3000
+NJUKEBOX_HOST=0.0.0.0
+NJUKEBOX_ADMIN_PIN=secretpin123
+
+# Spotify Configuration
+SPOTIFY_CLIENT_ID=your_spotify_client_id
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+
+# Database Configuration
+DATABASE_PATH=./data/custom_location.db
+MUSIC_DATABASE_PATH=./data/custom_music.db
+
+# Audio Configuration
+DEFAULT_VOLUME=0.8
+TRACK_LOCK_TIME=15
+AUTO_DJ=true
+
+# Development Mode
+DEBUG=true
+NODE_ENV=development</code></pre>
+
+            <div class="info">
+                <strong>Environment Priority:</strong> Environment variables take precedence over config.json settings, making them ideal for deployment-specific configurations.
+            </div>
+
+            <h2>Network Configuration</h2>
+
+            <h3>Local Network Access</h3>
+            <p>To allow access from other devices on your network:</p>
+
+            <ol>
+                <li>Set <code>host</code> to <code>0.0.0.0</code> in config.json</li>
+                <li>Configure your firewall to allow port 3000</li>
+                <li>Access using your computer's IP address: <code>http://192.168.1.100:3000</code></li>
+            </ol>
+
+            <h3>Port Configuration</h3>
+            <p>If port 3000 is in use, change it in multiple places:</p>
+
+            <ul>
+                <li><strong>config.json:</strong> Update the <code>port</code> setting</li>
+                <li><strong>Spotify redirect URI:</strong> Update in Spotify Developer Dashboard</li>
+                <li><strong>Batch files:</strong> Update any startup scripts</li>
+            </ul>
+
+            <h3>Reverse Proxy Setup</h3>
+            <p>For production deployment behind nginx:</p>
+
+            <pre><code>server {
+    listen 80;
+    server_name your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+    }
+}</code></pre>
+
+            <h2>Database Configuration</h2>
+
+            <h3>SQLite Settings</h3>
+            <p>nJukebox uses SQLite databases for data storage:</p>
+
+            <ul>
+                <li><strong>app.db:</strong> Application settings, user sessions, event data</li>
+                <li><strong>music.db:</strong> Music library metadata, play counts, ratings</li>
+            </ul>
+
+            <h3>Database Backup</h3>
+            <p>Regular backups are recommended:</p>
+
+            <pre><code># Windows
+copy "data\*.db" "backup\%date%\"
+
+# Linux/macOS
+cp data/*.db backup/$(date +%Y%m%d)/</code></pre>
+
+            <h3>Database Migration</h3>
+            <p>When moving between systems:</p>
+
+            <ol>
+                <li>Copy the entire <code>data/</code> directory</li>
+                <li>Update file paths in config.json if needed</li>
+                <li>Run a library rescan to update paths</li>
+            </ol>
+
+            <h2>Performance Tuning</h2>
+
+            <h3>Memory Usage</h3>
+            <p>Optimize for different system sizes:</p>
+
+            <table class="config-table">
+                <thead>
+                    <tr>
+                        <th>System Size</th>
+                        <th>Library Size</th>
+                        <th>Recommended Settings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Small (Raspberry Pi)</td>
+                        <td>&lt; 1,000 tracks</td>
+                        <td>Disable auto-scan, lower scan interval</td>
+                    </tr>
+                    <tr>
+                        <td>Medium (Home PC)</td>
+                        <td>1,000 - 10,000 tracks</td>
+                        <td>Default settings work well</td>
+                    </tr>
+                    <tr>
+                        <td>Large (Server)</td>
+                        <td>&gt; 10,000 tracks</td>
+                        <td>Enable caching, optimize database</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Disk Usage</h3>
+            <ul>
+                <li><strong>Cover Cache:</strong> Can grow large; enable periodic cleanup</li>
+                <li><strong>Log Files:</strong> Rotate or delete old log files</li>
+                <li><strong>Temporary Files:</strong> Clear cache directory periodically</li>
+            </ul>
+
+            <h2>Security Configuration</h2>
+
+            <h3>Admin PIN Security</h3>
+            <div class="warning">
+                <strong>Important:</strong> Always change the default PIN (1234) in production!
+            </div>
+
+            <ul>
+                <li>Use a strong 4-6 digit PIN</li>
+                <li>Avoid sequential numbers (1234, 2345)</li>
+                <li>Don't use dates or personal information</li>
+                <li>Consider rotating PINs periodically</li>
+            </ul>
+
+            <h3>Network Security</h3>
+            <ul>
+                <li><strong>Local Only:</strong> Keep host as localhost for private use</li>
+                <li><strong>Firewall:</strong> Restrict port access to trusted networks</li>
+                <li><strong>HTTPS:</strong> Use reverse proxy with SSL for external access</li>
+                <li><strong>VPN:</strong> Consider VPN access for remote administration</li>
+            </ul>
+
+            <h2>Internationalization</h2>
+
+            <h3>Adding New Languages</h3>
+            <p>To add a new language:</p>
+
+            <ol>
+                <li>Copy <code>locales/en.json</code> to <code>locales/[language].json</code></li>
+                <li>Translate all text strings</li>
+                <li>Update the language selector in the admin panel</li>
+                <li>Test all interface elements</li>
+            </ol>
+
+            <h3>Translation File Structure</h3>
+            <pre><code>{
+  "app": {
+    "title": "nJukebox",
+    "subtitle": "Your Digital Music Experience"
+  },
+  "navigation": {
+    "library": "Library",
+    "playlist": "Playlist",
+    "search": "Search"
+  },
+  "admin": {
+    "login": "Admin Login",
+    "settings": "Settings",
+    "reports": "Reports"
+  }
+}</code></pre>
+
+            <h2>Advanced Customization</h2>
+
+            <h3>Custom CSS</h3>
+            <p>Override default styles by creating <code>custom.css</code>:</p>
+
+            <pre><code>/* Custom color scheme */
+:root {
+    --primary-color: #ff6b35;
+    --background-dark: #1a1a2e;
+    --text-primary: #ffffff;
+}
+
+/* Custom font */
+body {
+    font-family: 'Your Custom Font', sans-serif;
+}
+
+/* Hide admin button for kiosk mode */
+.admin-lock {
+    display: none !important;
+}</code></pre>
+
+            <h3>Custom Visualization Effects</h3>
+            <p>Add custom visualizations by extending the effects system:</p>
+
+            <pre><code>// Custom effect in js/visualizations/custom.js
+class CustomEffect {
+    constructor(canvas, audioData) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.audioData = audioData;
+    }
+    
+    render() {
+        // Your custom visualization code
+    }
+}</code></pre>
+
+            <h3>Custom API Endpoints</h3>
+            <p>Extend the API by adding custom routes:</p>
+
+            <pre><code>// In jukebox_server.js
+app.get('/api/custom/stats', (req, res) => {
+    // Custom statistics endpoint
+    res.json({
+        totalPlays: getTotalPlays(),
+        topGenres: getTopGenres()
+    });
+});</code></pre>
+
+            <div class="success">
+                <strong>Customization Tip:</strong> Keep custom modifications in separate files when possible to make updating easier while preserving your customizations.
+            </div>
+
+            <h2>Deployment Configurations</h2>
+
+            <h3>Development Environment</h3>
+            <pre><code>{
+  "app": {
+    "port": 3000,
+    "host": "localhost",
+    "adminPin": "1234"
+  },
+  "audio": {
+    "trackLockTime": 1
+  },
+  "debug": true
+}</code></pre>
+
+            <h3>Production Environment</h3>
+            <pre><code>{
+  "app": {
+    "port": 8080,
+    "host": "0.0.0.0",
+    "adminPin": "secure_pin_here"
+  },
+  "audio": {
+    "trackLockTime": 10
+  },
+  "reporting": {
+    "enabled": true,
+    "logDetail": "essential"
+  },
+  "debug": false
+}</code></pre>
+
+            <h3>Party/Event Configuration</h3>
+            <pre><code>{
+  "audio": {
+    "trackLockTime": 30,
+    "autoDJ": true,
+    "maxPlaylistSize": 50
+  },
+  "visualization": {
+    "enabled": true,
+    "switchInterval": 15
+  },
+  "reporting": {
+    "gemaCompliance": true
+  }
+}</code></pre>
+
+            <div class="info">
+                <strong>Configuration Management:</strong> Consider using different config files for different environments and switching between them with environment variables or startup scripts.
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - nJukebox Documentation</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .doc-container {
+            max-width: 800px;
+            margin: 100px auto 0;
+            padding: 0 20px;
+        }
+        .doc-header {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .doc-content {
+            background: var(--background-light);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
+        .doc-nav {
+            background: var(--background-dark);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .doc-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .doc-nav li {
+            margin-bottom: 10px;
+        }
+        .doc-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        .doc-nav a:hover, .doc-nav a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        h1, h2, h3 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        h2 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        p, li {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .warning, .info, .success {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid;
+        }
+        .warning {
+            background: rgba(255, 193, 7, 0.1);
+            border-color: #ffc107;
+        }
+        .info {
+            background: rgba(13, 202, 240, 0.1);
+            border-color: #0dcaf0;
+        }
+        .success {
+            background: rgba(29, 185, 84, 0.1);
+            border-color: var(--primary-color);
+        }
+        pre {
+            background: var(--background-darker);
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        code {
+            color: var(--primary-color);
+            font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
+                    <span class="logo">🎵</span>
+                    <span class="brand-name">nJukebox</span>
+                </a>
+            </div>
+            <div class="nav-menu">
+                <a href="../index.html" class="nav-link">Home</a>
+                <a href="../index.html#features" class="nav-link">Features</a>
+                <a href="../index.html#demo" class="nav-link">Demo</a>
+                <a href="../index.html#setup" class="nav-link">Setup</a>
+                <a href="getting-started.html" class="nav-link">Docs</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="doc-container">
+        <div class="language-toggle">
+            <a href="de/erste-schritte.html">🇩🇪 Deutsch</a>
+        </div>
+        
+        <div class="doc-header">
+            <h1>Getting Started with nJukebox</h1>
+            <p>Complete installation and setup guide</p>
+        </div>
+
+        <div class="doc-nav">
+            <ul>
+                <li><a href="getting-started.html" class="active">Getting Started</a></li>
+                <li><a href="spotify-setup.html">Spotify Setup</a></li>
+                <li><a href="admin-guide.html">Admin Guide</a></li>
+                <li><a href="configuration.html">Configuration</a></li>
+                <li><a href="troubleshooting.html">Troubleshooting</a></li>
+                <li><a href="api-reference.html">API Reference</a></li>
+            </ul>
+        </div>
+
+        <div class="doc-content">
+            <div class="warning">
+                <strong>Personal Project Notice:</strong> This project was developed for my personal use as a touch display hardware jukebox. 
+                Please note that the code quality is admittedly poor and was written for functionality over best practices. 
+                Use at your own discretion!
+            </div>
+
+            <h2>System Requirements</h2>
+            <ul>
+                <li><strong>Node.js</strong> 14.0 or higher</li>
+                <li><strong>npm</strong> 6.0 or higher</li>
+                <li><strong>Modern web browser</strong> with Widevine DRM support (Chrome, Firefox, Safari, Edge)</li>
+                <li><strong>MP3 music files</strong> (optional, for local library)</li>
+                <li><strong>Spotify Premium account</strong> (optional, for streaming)</li>
+            </ul>
+
+            <h2>Installation Steps</h2>
+
+            <h3>1. Clone the Repository</h3>
+            <pre><code>git clone https://github.com/Nigcra/nJukebox.git
+cd nJukebox</code></pre>
+
+            <h3>2. Install Dependencies</h3>
+            <pre><code>npm install</code></pre>
+
+            <div class="info">
+                <strong>Note:</strong> This will install all required Node.js packages including Express.js, SQLite3, and other dependencies.
+            </div>
+
+            <h3>3. Prepare Your Music Library</h3>
+            <p>Copy your MP3 files to the <code>music/</code> directory:</p>
+            <pre><code># Create music directory if it doesn't exist
+mkdir -p music
+
+# Copy your MP3 files
+cp /path/to/your/music/*.mp3 music/</code></pre>
+
+            <div class="warning">
+                <strong>Important:</strong> Only MP3 files are currently supported. Make sure your files have proper ID3 tags for best results.
+            </div>
+
+            <h3>4. Start the System</h3>
+            <p>nJukebox consists of two components that need to be running:</p>
+
+            <h4>Option A: Start Everything (Recommended)</h4>
+            <pre><code>npm start</code></pre>
+
+            <h4>Option B: Start Components Separately</h4>
+            <pre><code># Terminal 1: Start the data server
+npm run server
+
+# Terminal 2: Start the web interface
+npm run web</code></pre>
+
+            <div class="success">
+                <strong>Success!</strong> nJukebox should now be running at <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>
+            </div>
+
+            <h2>First Time Setup</h2>
+
+            <h3>1. Music Library Scan</h3>
+            <p>When you first access nJukebox, it will automatically scan your <code>music/</code> directory for MP3 files. This process:</p>
+            <ul>
+                <li>Reads ID3 tags from your MP3 files</li>
+                <li>Extracts album artwork</li>
+                <li>Creates a searchable database</li>
+                <li>Organizes music by artist, album, genre, and decade</li>
+            </ul>
+
+            <h3>2. Admin Access</h3>
+            <p>To access admin features:</p>
+            <ol>
+                <li>Click the lock icon (🔒) in the top-left corner</li>
+                <li>Enter the default PIN: <code>1234</code></li>
+                <li>You now have access to admin controls</li>
+            </ol>
+
+            <div class="warning">
+                <strong>Security:</strong> Change the default PIN in the admin settings for production use.
+            </div>
+
+            <h3>3. Configure Settings</h3>
+            <p>In the admin panel, you can configure:</p>
+            <ul>
+                <li><strong>Language:</strong> Switch between German and English</li>
+                <li><strong>Auto-DJ:</strong> Enable automatic playlist generation</li>
+                <li><strong>Track Lock Time:</strong> Prevent recently played tracks from being queued again</li>
+                <li><strong>Visualizations:</strong> Customize visual effects</li>
+            </ul>
+
+            <h2>Basic Usage</h2>
+
+            <h3>Browsing Music</h3>
+            <ul>
+                <li><strong>🌟 Neu:</strong> Recently added tracks</li>
+                <li><strong>👤 Interpret:</strong> Browse by artist</li>
+                <li><strong>💿 Album:</strong> Browse by album</li>
+                <li><strong>🎷 Genre:</strong> Browse by music genre</li>
+                <li><strong>🕰️ Jahrzehnt:</strong> Browse by decade</li>
+                <li><strong>📊 Top Hits:</strong> Most played tracks</li>
+            </ul>
+
+            <h3>Playing Music</h3>
+            <ol>
+                <li>Browse or search for a track</li>
+                <li>Click on any track to add it to the playlist</li>
+                <li>Use the player controls at the bottom</li>
+                <li>View the current playlist on the right side</li>
+            </ol>
+
+            <h3>Search</h3>
+            <p>Use the search bar to find music by:</p>
+            <ul>
+                <li>Artist name</li>
+                <li>Album title</li>
+                <li>Song title</li>
+                <li>Genre</li>
+            </ul>
+
+            <h2>Next Steps</h2>
+            <ul>
+                <li><a href="spotify-setup.html">Set up Spotify integration</a> for streaming music</li>
+                <li><a href="admin-guide.html">Learn about admin features</a> for event management</li>
+                <li><a href="configuration.html">Customize advanced settings</a> for your specific needs</li>
+            </ul>
+
+            <div class="info">
+                <strong>Need Help?</strong> Check our <a href="troubleshooting.html">troubleshooting guide</a> or visit the <a href="https://github.com/Nigcra/nJukebox/issues" target="_blank">GitHub issues page</a> for support.
+            </div>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
