@@ -71,12 +71,24 @@ function initLanguageSwitcher() {
             langBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             
-            // Show/hide content
+            // Show/hide content (skip buttons themselves)
             langContents.forEach(content => {
                 if (content.dataset.lang === targetLang) {
                     content.style.display = 'block';
                 } else {
                     content.style.display = 'none';
+                }
+            });
+            
+            // Also handle [data-lang] elements that aren't buttons
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                // Skip buttons and already handled .lang-content
+                if (element.classList.contains('lang-btn') || element.classList.contains('lang-content')) return;
+                
+                if (element.dataset.lang === targetLang) {
+                    element.style.display = '';
+                } else {
+                    element.style.display = 'none';
                 }
             });
             
@@ -87,7 +99,7 @@ function initLanguageSwitcher() {
     
     // Load saved language preference
     const savedLang = localStorage.getItem('preferred-language') || 'en';
-    const savedBtn = document.querySelector(`[data-lang="${savedLang}"]`);
+    const savedBtn = document.querySelector(`.lang-btn[data-lang="${savedLang}"]`);
     if (savedBtn) {
         savedBtn.click();
     }
@@ -130,6 +142,9 @@ const observer = new IntersectionObserver(function(entries) {
 
 // Observe all sections for animations
 document.addEventListener('DOMContentLoaded', function() {
+    // Initialize language switcher
+    initLanguageSwitcher();
+    
     const sections = document.querySelectorAll('section');
     sections.forEach(section => {
         observer.observe(section);

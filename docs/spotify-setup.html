@@ -7,79 +7,130 @@
     <link rel="stylesheet" href="../style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .doc-container {
-            max-width: 800px;
-            margin: 100px auto 0;
-            padding: 0 20px;
+        body {
+            display: flex;
+            margin: 0;
+            padding-top: 80px;
         }
+        
+        .doc-sidebar {
+            position: fixed;
+            left: 0;
+            top: 80px;
+            width: 250px;
+            height: calc(100vh - 80px);
+            background: var(--background-light);
+            padding: 30px 20px;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .doc-sidebar h3 {
+            color: var(--text-primary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            padding-left: 12px;
+        }
+        
+        .doc-sidebar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .doc-sidebar li {
+            margin-bottom: 5px;
+        }
+        
+        .doc-sidebar a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .doc-sidebar a:hover {
+            background: rgba(29, 185, 84, 0.1);
+            color: var(--text-primary);
+        }
+        
+        .doc-sidebar a.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .doc-sidebar a .icon {
+            font-size: 18px;
+        }
+        
+        .doc-main {
+            margin-left: 270px;
+            flex: 1;
+            padding: 0 40px 40px;
+            max-width: 900px;
+        }
+        
+        .doc-container {
+            width: 100%;
+        }
+        
         .doc-header {
             margin-bottom: 40px;
-            text-align: center;
         }
+        
         .doc-content {
             background: var(--background-light);
             padding: 40px;
             border-radius: 20px;
             margin-bottom: 40px;
         }
-        .doc-nav {
-            background: var(--background-dark);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-        }
-        .doc-nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
-        .doc-nav li {
-            margin-bottom: 10px;
-        }
-        .doc-nav a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            display: block;
-            transition: all 0.3s ease;
-        }
-        .doc-nav a:hover, .doc-nav a.active {
-            background: var(--primary-color);
-            color: white;
-        }
+        
         h1, h2, h3 {
             color: var(--text-primary);
             margin-bottom: 20px;
         }
+        
         h2 {
             border-bottom: 2px solid var(--primary-color);
             padding-bottom: 10px;
             margin-top: 40px;
         }
+        
         p, li {
             color: var(--text-secondary);
             line-height: 1.6;
             margin-bottom: 15px;
         }
+        
         .warning, .info, .success {
             padding: 15px;
             border-radius: 10px;
             margin: 20px 0;
             border-left: 4px solid;
         }
+        
         .warning {
             background: rgba(255, 193, 7, 0.1);
             border-color: #ffc107;
         }
+        
         .info {
             background: rgba(13, 202, 240, 0.1);
             border-color: #0dcaf0;
         }
+        
         .success {
             background: rgba(29, 185, 84, 0.1);
             border-color: var(--primary-color);
         }
+        
         pre {
             background: var(--background-darker);
             padding: 20px;
@@ -87,10 +138,22 @@
             overflow-x: auto;
             margin: 20px 0;
         }
+        
         code {
             color: var(--primary-color);
             font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
         }
+        
+        @media (max-width: 768px) {
+            .doc-sidebar {
+                display: none;
+            }
+            .doc-main {
+                margin-left: 0;
+                padding: 0 20px 40px;
+            }
+        }
+        
         .step-image {
             background: var(--background-darker);
             border: 1px solid var(--border-color);
@@ -103,7 +166,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(18, 18, 18, 0.98);">
         <div class="nav-container">
             <div class="nav-brand">
                 <a href="../index.html" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
@@ -112,37 +175,99 @@
                 </a>
             </div>
             <div class="nav-menu">
-                <a href="../index.html" class="nav-link">Home</a>
                 <a href="../index.html#features" class="nav-link">Features</a>
                 <a href="../index.html#demo" class="nav-link">Demo</a>
                 <a href="../index.html#setup" class="nav-link">Setup</a>
-                <a href="getting-started.html" class="nav-link">Docs</a>
+                <a href="../index.html#docs" class="nav-link">Documentation</a>
+                <div class="language-selector">
+                    <button class="lang-btn active" data-lang="en" title="English">
+                        <svg class="flag-icon" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="24" height="16" fill="#012169"/>
+                            <path d="M0 0L24 16M24 0L0 16" stroke="#FFFFFF" stroke-width="1.6"/>
+                            <path d="M12 0V16M0 8H24" stroke="#FFFFFF" stroke-width="2.7"/>
+                            <path d="M12 0V16M0 8H24" stroke="#C8102E" stroke-width="1.6"/>
+                            <path d="M0 0L24 16M24 0L0 16" stroke="#C8102E" stroke-width="0.8"/>
+                        </svg>
+                    </button>
+                    <button class="lang-btn" data-lang="de" title="Deutsch">
+                        <svg class="flag-icon" viewBox="0 0 24 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="24" height="5.33" fill="#000000"/>
+                            <rect y="5.33" width="24" height="5.33" fill="#DD0000"/>
+                            <rect y="10.67" width="24" height="5.33" fill="#FFCE00"/>
+                        </svg>
+                    </button>
+                </div>
+                <a href="https://github.com/Nigcra/nJukebox" class="nav-link github-link" target="_blank">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.30.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
 
-    <div class="doc-container">
-        <div class="language-toggle">
-            <a href="de/spotify-einrichtung.html">🇩🇪 Deutsch</a>
-        </div>
-        
-        <div class="doc-header">
-            <h1>🟢 Spotify Integration Setup</h1>
-            <p>Connect nJukebox with Spotify for streaming music</p>
-        </div>
+    <!-- Sidebar Navigation -->
+    <aside class="doc-sidebar">
+        <h3 data-lang="en">Documentation</h3>
+        <h3 data-lang="de" style="display: none;">Dokumentation</h3>
+        <ul>
+            <li>
+                <a href="getting-started.html">
+                    <span class="icon">🚀</span>
+                    <span data-lang="en">Getting Started</span>
+                    <span data-lang="de" style="display: none;">Erste Schritte</span>
+                </a>
+            </li>
+            <li>
+                <a href="spotify-setup.html" class="active">
+                    <span class="icon">🟢</span>
+                    <span data-lang="en">Spotify Setup</span>
+                    <span data-lang="de" style="display: none;">Spotify-Einrichtung</span>
+                </a>
+            </li>
+            <li>
+                <a href="admin-guide.html">
+                    <span class="icon">🎛️</span>
+                    <span data-lang="en">Admin Guide</span>
+                    <span data-lang="de" style="display: none;">Admin-Anleitung</span>
+                </a>
+            </li>
+            <li>
+                <a href="configuration.html">
+                    <span class="icon">⚙️</span>
+                    <span data-lang="en">Configuration</span>
+                    <span data-lang="de" style="display: none;">Konfiguration</span>
+                </a>
+            </li>
+            <li>
+                <a href="troubleshooting.html">
+                    <span class="icon">🔧</span>
+                    <span data-lang="en">Troubleshooting</span>
+                    <span data-lang="de" style="display: none;">Problembehandlung</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
 
-        <div class="doc-nav">
-            <ul>
-                <li><a href="getting-started.html">Getting Started</a></li>
-                <li><a href="spotify-setup.html" class="active">Spotify Setup</a></li>
-                <li><a href="admin-guide.html">Admin Guide</a></li>
-                <li><a href="configuration.html">Configuration</a></li>
-                <li><a href="troubleshooting.html">Troubleshooting</a></li>
-                <li><a href="api-reference.html">API Reference</a></li>
-            </ul>
-        </div>
+    <!-- Main Content -->
+    <div class="doc-main">
+        <div class="doc-container">
+            <div class="doc-header" data-lang="en">
+                <h1>🟢 Spotify Integration Setup</h1>
+                <p>Connect nJukebox with Spotify for streaming music</p>
+            </div>
+            <div class="doc-header" data-lang="de" style="display: none;">
+                <h1>🟢 Spotify-Einrichtung</h1>
+                <p>Verbinde nJukebox mit Spotify für Streaming-Musik</p>
+            </div>
 
-        <div class="doc-content">
+            <div class="doc-content" data-lang="en">
             <div class="warning">
                 <strong>Prerequisites:</strong> You need a Spotify Premium account to use the streaming features. Free accounts are not supported by Spotify's Web Playback SDK.
             </div>
@@ -295,8 +420,179 @@
                 <strong>Next Steps:</strong> Learn about <a href="admin-guide.html">admin features</a> and how to manage events with Spotify integration.
             </div>
         </div>
+
+        <div class="doc-content" data-lang="de" style="display: none;">
+            <div class="warning">
+                <strong>Spotify Premium erforderlich:</strong> Für die Spotify-Integration benötigen Sie ein Spotify Premium-Konto. 
+                Kostenlose Spotify-Konten können die Web Playback API nicht nutzen.
+            </div>
+
+            <div class="warning">
+                <strong>Widevine DRM erforderlich:</strong> Ihr Browser muss Widevine DRM unterstützen, damit die Spotify-Integration funktioniert. 
+                Moderne Browser wie Chrome, Firefox, Safari und Edge unterstützen dies standardmäßig. Bei älteren Browsern oder speziellen Konfigurationen 
+                könnte Widevine deaktiviert sein, was die Spotify-Wiedergabe verhindert.
+            </div>
+
+            <h2>Warum Spotify integrieren?</h2>
+            <p>Die Spotify-Integration erweitert Ihre nJukebox um Millionen von Songs und bietet:</p>
+            <ul>
+                <li><strong>🎵 Riesige Musikbibliothek:</strong> Zugriff auf über 50 Millionen Songs</li>
+                <li><strong>🔍 Erweiterte Suche:</strong> Finden Sie jeden Song, Künstler oder Album</li>
+                <li><strong>🤖 Auto-Learning:</strong> Automatisches Hinzufügen beliebter Playlists</li>
+                <li><strong>🎯 Nahtlose Integration:</strong> Kombiniert mit Ihrer lokalen Musiksammlung</li>
+            </ul>
+
+            <h2>Voraussetzungen</h2>
+            <ul>
+                <li>Spotify Premium Konto</li>
+                <li>Laufende nJukebox-Installation</li>
+                <li>Admin-Zugriff auf nJukebox</li>
+                <li>Internetverbindung</li>
+            </ul>
+
+            <h2>Schritt 1: Spotify Developer App erstellen</h2>
+            <ol>
+                <li>Gehen Sie zu <a href="https://developer.spotify.com/dashboard" target="_blank">developer.spotify.com/dashboard</a></li>
+                <li>Melden Sie sich mit Ihrem Spotify-Konto an</li>
+                <li>Klicken Sie auf "Create an App"</li>
+                <li>App-Details eingeben:
+                    <ul>
+                        <li><strong>App Name:</strong> nJukebox (oder ein beliebiger Name)</li>
+                        <li><strong>App Description:</strong> Digital Jukebox System</li>
+                        <li><strong>Website:</strong> http://localhost:3000 (oder Ihre Domain)</li>
+                        <li><strong>Redirect URI:</strong> <code>http://localhost:3000/spotify_login.html</code></li>
+                    </ul>
+                </li>
+                <li>Akzeptieren Sie die Nutzungsbedingungen</li>
+                <li>Klicken Sie auf <strong>"Speichern"</strong></li>
+            </ol>
+
+            <div class="info">
+                <strong>Wichtig:</strong> Die Redirect URI muss exakt <code>http://localhost:3000/spotify_login.html</code> lauten, 
+                auch wenn Sie nJukebox später über das Netzwerk verwenden.
+            </div>
+
+            <h2>Schritt 2: Client ID kopieren</h2>
+            <ol>
+                <li>Nach dem Erstellen sehen Sie Ihr App-Dashboard</li>
+                <li>Klicken Sie auf Ihren App-Namen für Details</li>
+                <li>Finden Sie die <strong>"Client ID"</strong> in den App-Einstellungen</li>
+                <li>Kopieren Sie diese Client ID (Sie brauchen sie im nächsten Schritt)</li>
+            </ol>
+
+            <div class="info">
+                <strong>Sicherheitshinweis:</strong> Die Client ID ist öffentlich und kann geteilt werden. Verwenden oder teilen Sie NICHT das Client Secret für Web-Anwendungen.
+            </div>
+
+            <h2>Schritt 3: nJukebox konfigurieren</h2>
+            <ol>
+                <li>Starten Sie nJukebox und öffnen Sie die Web-Oberfläche</li>
+                <li>Klicken Sie auf das Schloss-Symbol (🔒) und geben Sie Ihre Admin-PIN ein</li>
+                <li>Im Admin-Panel klicken Sie auf <strong>"⚙️ Konfiguration"</strong> neben den Spotify-Einstellungen</li>
+                <li>Fügen Sie Ihre Client ID in das Eingabefeld ein</li>
+                <li>Klicken Sie auf <strong>"Speichern"</strong></li>
+            </ol>
+
+            <div class="success">
+                <strong>Konfiguration abgeschlossen!</strong> nJukebox ist jetzt für Spotify konfiguriert.
+            </div>
+
+            <h2>Schritt 4: Spotify-Konto verbinden</h2>
+            <ol>
+                <li>Im Admin-Panel klicken Sie auf <strong>"Mit Spotify verbinden"</strong></li>
+                <li>Sie werden zur Spotify-Autorisierungsseite weitergeleitet</li>
+                <li>Melden Sie sich mit Ihrem Spotify Premium-Konto an</li>
+                <li>Gewähren Sie die angeforderten Berechtigungen:
+                    <ul>
+                        <li>Aktuell abgespielte Titel lesen</li>
+                        <li>Wiedergabe auf Ihren Geräten steuern</li>
+                        <li>Zugriff auf E-Mail und Profil</li>
+                    </ul>
+                </li>
+                <li>Sie werden zurück zu nJukebox weitergeleitet</li>
+                <li>Der Spotify-Status sollte als verbunden angezeigt werden (grüner Punkt)</li>
+            </ol>
+
+            <h2>Benötigte Spotify-Berechtigungen</h2>
+            <p>nJukebox fordert die folgenden Spotify-Scopes an:</p>
+            <ul>
+                <li><code>user-read-playback-state</code> - Aktuellen Wiedergabestatus lesen</li>
+                <li><code>user-modify-playbook-state</code> - Wiedergabe steuern</li>
+                <li><code>user-read-currently-playing</code> - Aktuell abgespielten Titel lesen</li>
+                <li><code>streaming</code> - Musik auf unterstützten Geräten abspielen</li>
+                <li><code>user-read-email</code> - Zugriff auf E-Mail-Adresse</li>
+                <li><code>user-read-private</code> - Zugriff auf Profilinformationen</li>
+            </ul>
+
+            <h2>Spotify-Funktionen nutzen</h2>
+
+            <h3>Spotify durchsuchen</h3>
+            <p>Sobald verbunden, enthält die Suchfunktion Spotify-Ergebnisse neben Ihrer lokalen Musikbibliothek.</p>
+
+            <h3>Spotify-Titel abspielen</h3>
+            <ol>
+                <li>Suchen Sie nach einem beliebigen Titel, Künstler oder Album</li>
+                <li>Spotify-Ergebnisse werden mit einem 🌐 Badge angezeigt</li>
+                <li>Klicken Sie auf einen Spotify-Titel, um ihn zur Playlist hinzuzufügen</li>
+                <li>Der Titel wird über nJukebox abgespielt</li>
+            </ol>
+
+            <h3>Gemischte Playlists</h3>
+            <p>Sie können Playlists erstellen, die lokale MP3-Dateien mit Spotify-Titeln nahtlos mischen.</p>
+
+            <h2>Problembehandlung</h2>
+
+            <h3>Verbindungsprobleme</h3>
+            <div class="warning">
+                <strong>Häufige Probleme:</strong>
+                <ul>
+                    <li><strong>Redirect URI stimmt nicht überein:</strong> Stellen Sie sicher, dass die Redirect URI in Ihrer Spotify-App exakt übereinstimmt: <code>http://localhost:3000/spotify_login.html</code></li>
+                    <li><strong>Kostenloses Konto:</strong> Spotify Premium ist für Wiedergabefunktionen erforderlich</li>
+                    <li><strong>Browser blockiert:</strong> Stellen Sie sicher, dass Pop-ups für die nJukebox-Domain erlaubt sind</li>
+                </ul>
+            </div>
+
+            <h3>Wiedergabeprobleme</h3>
+            <ul>
+                <li><strong>Kein Ton:</strong> Überprüfen Sie, dass Ihr Browser die Audio-Wiedergabe erlaubt</li>
+                <li><strong>Titel überspringen:</strong> Stellen Sie eine stabile Internetverbindung sicher</li>
+                <li><strong>Autorisierung abgelaufen:</strong> Autorisieren Sie erneut im Admin-Panel, wenn die Verbindung verloren geht</li>
+                <li><strong>Widevine DRM:</strong> Überprüfen Sie, dass Widevine DRM in Ihrem Browser aktiviert ist (chrome://settings/content/protectedContent oder about:preferences#privacy in Firefox)</li>
+            </ul>
+
+            <h3>Token aktualisieren</h3>
+            <p>Spotify-Tokens laufen nach 1 Stunde ab. nJukebox erneuert sie automatisch, aber falls Autorisierungsfehler auftreten:</p>
+            <ol>
+                <li>Gehen Sie zum Admin-Panel</li>
+                <li>Klicken Sie auf die Spotify-Konfigurationsschaltfläche</li>
+                <li>Autorisieren Sie Ihr Konto erneut</li>
+            </ol>
+
+            <h2>Erweiterte Konfiguration</h2>
+
+            <h3>Custom Domain Setup</h3>
+            <p>Wenn Sie nJukebox auf einer benutzerdefinierten Domain betreiben:</p>
+            <ol>
+                <li>Aktualisieren Sie die Redirect URI Ihrer Spotify-App auf: <code>https://ihredomain.com/spotify_login.html</code></li>
+                <li>Stellen Sie sicher, dass Ihre Domain HTTPS verwendet (von Spotify erforderlich)</li>
+                <li>Aktualisieren Sie die Website-URL in Ihren Spotify-App-Einstellungen</li>
+            </ol>
+
+            <h3>Mehrere Instanzen</h3>
+            <p>Um mehrere nJukebox-Instanzen zu betreiben:</p>
+            <ul>
+                <li>Erstellen Sie separate Spotify-Apps für jede Instanz</li>
+                <li>Verwenden Sie unterschiedliche Ports und Redirect URIs</li>
+                <li>Konfigurieren Sie jede Instanz mit ihrer eigenen Client ID</li>
+            </ul>
+
+            <div class="info">
+                <strong>Nächste Schritte:</strong> Erfahren Sie mehr über <a href="admin-guide.html">Admin-Funktionen</a> und wie Sie Events mit Spotify-Integration verwalten.
+            </div>
+        </div>
+        </div>
     </div>
 
-    <script src="../script.js"></script>
+    <script src="docs-script.js"></script>
 </body>
 </html>

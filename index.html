@@ -68,13 +68,13 @@
                         Built for dedicated hardware jukeboxes, events, and kiosk-style music stations.
                     </p>
                     <div class="disclaimer">
-                        <p><strong>Personal Project Notice:</strong> This project was developed for my personal use as a touch display hardware jukebox. 
+                        <p><strong>Notice:</strong> This project was developed for my personal use as a touch display hardware jukebox. 
                         It's optimized for large touchscreens, not mobile devices. Code quality is admittedly poor and was written for functionality over best practices.</p>
                     </div>
                     <div class="hero-buttons">
                         <a href="#demo" class="btn btn-primary">
                             <span>🎵</span>
-                            Try Demo
+                            View Demo
                         </a>
                         <a href="https://github.com/Nigcra/nJukebox" class="btn btn-secondary" target="_blank">
                             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
@@ -95,13 +95,13 @@
                         Gebaut für dedizierte Hardware-Jukeboxes, Veranstaltungen und Kiosk-Style Musikstationen.
                     </p>
                     <div class="disclaimer">
-                        <p><strong>Hinweis zum persönlichen Projekt:</strong> Dieses Projekt wurde für meinen persönlichen Gebrauch als Touch-Display Hardware-Jukebox entwickelt. 
+                        <p><strong>Hinweis:</strong> Dieses Projekt wurde für meinen persönlichen Gebrauch als Touch-Display Hardware-Jukebox entwickelt. 
                         Es ist für große Touchscreens optimiert, nicht für mobile Geräte. Die Code-Qualität ist zugegebenermaßen schlecht und wurde auf Funktionalität statt auf bewährte Praktiken ausgelegt.</p>
                     </div>
                     <div class="hero-buttons">
                         <a href="#demo" class="btn btn-primary">
                             <span>🎵</span>
-                            Demo testen
+                            Demo anzeigen
                         </a>
                         <a href="https://github.com/Nigcra/nJukebox" class="btn btn-secondary" target="_blank">
                             <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
@@ -151,12 +151,16 @@
     <!-- Features Section -->
     <section id="features" class="features">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-lang="en">
                 <h2 class="section-title">Powerful Features</h2>
                 <p class="section-subtitle">Everything you need for a complete digital music experience</p>
             </div>
+            <div class="section-header" data-lang="de" style="display: none;">
+                <h2 class="section-title">Leistungsstarke Funktionen</h2>
+                <p class="section-subtitle">Alles was du für ein vollständiges digitales Musikerlebnis brauchst</p>
+            </div>
             
-            <div class="features-grid">
+            <div class="features-grid" data-lang="en">
                 <div class="feature-card">
                     <div class="feature-icon">🎵</div>
                     <h3 class="feature-title">Local Music Library</h3>
@@ -229,18 +233,96 @@
                     </p>
                 </div>
             </div>
+
+            <div class="features-grid" data-lang="de" style="display: none;">
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h3 class="feature-title">Lokale Musikbibliothek</h3>
+                    <p class="feature-description">
+                        Scanne und organisiere deine MP3-Sammlung mit automatischer Metadatenerkennung, 
+                        Albumcover-Extraktion und intelligenter Kategorisierung nach Künstler, Album, Genre und Jahrzehnt.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🟢</div>
+                    <h3 class="feature-title">Spotify Integration</h3>
+                    <p class="feature-description">
+                        Nahtlose Integration mit Spotify Premium für Zugriff auf Millionen von Tracks. 
+                        Mische lokale und Streaming-Musik in derselben Oberfläche.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎛️</div>
+                    <h3 class="feature-title">Admin-Steuerung</h3>
+                    <p class="feature-description">
+                        PIN-geschütztes Admin-Panel mit Playlist-Verwaltung, Auto-DJ-Einstellungen 
+                        und umfassenden Systemkontrollen für Events und Partys.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">Visuelles Erlebnis</h3>
+                    <p class="feature-description">
+                        Dynamische Visualisierungen mit Weltraum-Themen, Feuereffekten, Partikeln und Kreisen. 
+                        Anpassbare Themes und Echtzeit-Audio-Visualisierung.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3 class="feature-title">Mehrsprachig</h3>
+                    <p class="feature-description">
+                        Eingebaute Internationalisierungsunterstützung mit Deutsch und Englisch. 
+                        Einfach erweiterbar für zusätzliche Sprachen.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Großer Touchscreen</h3>
+                    <p class="feature-description">
+                        Speziell optimiert für große Touchscreens und Kiosk-Setups. 
+                        Große Buttons, klare Typografie und intuitive Touch-Interaktionen für Hardware-Jukeboxen.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">Auto-DJ Modus</h3>
+                    <p class="feature-description">
+                        Intelligente Playlist-Generierung, die die Musik am Laufen hält, wenn die Warteschlange leer ist. 
+                        Smarte Track-Auswahl basierend auf Hörhistorie.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Analytics & Reports</h3>
+                    <p class="feature-description">
+                        Detaillierte Abspielstatistiken, GEMA-Reporting für deutsche Events 
+                        und umfassende Nutzungsanalysen für Veranstalter.
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Demo Section -->
     <section id="demo" class="demo">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-lang="en">
                 <h2 class="section-title">See It In Action</h2>
-                <p class="section-subtitle">Experience the power and simplicity of nJukebox</p>
+                <p class="section-subtitle">Designed for parties and celebrations</p>
+            </div>
+            <div class="section-header" data-lang="de" style="display: none;">
+                <h2 class="section-title">nJukebox in Aktion</h2>
+                <p class="section-subtitle">Entwickelt für Feiern und Partys</p>
             </div>
             
-            <div class="demo-container">
+            <div class="demo-container" data-lang="en">
                 <div class="demo-screenshot">
                     <img src="screenshots/main-interface.png" alt="nJukebox Main Interface" class="screenshot">
                     <div class="screenshot-overlay">
@@ -278,18 +360,61 @@
                     </div>
                 </div>
             </div>
+
+            <div class="demo-container" data-lang="de" style="display: none;">
+                <div class="demo-screenshot">
+                    <img src="screenshots/main-interface.png" alt="nJukebox Hauptoberfläche" class="screenshot">
+                    <div class="screenshot-overlay">
+                        <div class="play-button">
+                            <svg width="60" height="60" fill="white" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-features">
+                    <div class="demo-feature">
+                        <div class="demo-feature-icon">🎯</div>
+                        <div class="demo-feature-content">
+                            <h4>Intuitive Oberfläche</h4>
+                            <p>Durchsuche deine Musikbibliothek nach Künstler, Album, Genre oder Jahrzehnt mit unserer modernen Benutzeroberfläche.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-feature">
+                        <div class="demo-feature-icon">🎵</div>
+                        <div class="demo-feature-content">
+                            <h4>Echtzeit-Visualisierung</h4>
+                            <p>Genieße beeindruckende Audio-Visualisierungen, die in Echtzeit auf deine Musik reagieren.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="demo-feature">
+                        <div class="demo-feature-icon">📱</div>
+                        <div class="demo-feature-content">
+                            <h4>Touchscreen-Hardware</h4>
+                            <p>Speziell entwickelt für große Touchscreens und dedizierte Jukebox-Hardware-Setups.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Setup Section -->
     <section id="setup" class="setup">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-lang="en">
                 <h2 class="section-title">Quick Setup</h2>
                 <p class="section-subtitle">Get nJukebox running in minutes</p>
             </div>
+            <div class="section-header" data-lang="de" style="display: none;">
+                <h2 class="section-title">Schnelle Einrichtung</h2>
+                <p class="section-subtitle">Bring nJukebox in Minuten zum Laufen</p>
+            </div>
             
-            <div class="setup-steps">
+            <div class="setup-steps" data-lang="en">
                 <div class="step">
                     <div class="step-number">1</div>
                     <div class="step-content">
@@ -347,11 +472,76 @@
                 </div>
             </div>
 
-            <div class="setup-note">
+            <div class="setup-steps" data-lang="de" style="display: none;">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Repository klonen</h3>
+                        <p>Lade die neueste Version von GitHub herunter</p>
+                        <div class="code-block">
+                            <code>git clone https://github.com/Nigcra/nJukebox.git</code>
+                            <button class="copy-btn" onclick="copyToClipboard('git clone https://github.com/Nigcra/nJukebox.git')">">
+                                📋
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Abhängigkeiten installieren</h3>
+                        <p>Installiere Node.js-Abhängigkeiten für den Backend-Server</p>
+                        <div class="code-block">
+                            <code>cd jukebox && npm install</code>
+                            <button class="copy-btn" onclick="copyToClipboard('cd jukebox && npm install')">
+                                📋
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Musik hinzufügen</h3>
+                        <p>Platziere deine MP3-Dateien im <code>music/</code> Verzeichnis</p>
+                        <div class="code-block">
+                            <code>cp /pfad/zu/deiner/musik/* ./music/</code>
+                            <button class="copy-btn" onclick="copyToClipboard('cp /pfad/zu/deiner/musik/* ./music/')">
+                                📋
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>System starten</h3>
+                        <p>Starte sowohl den Datenserver als auch die Web-Oberfläche</p>
+                        <div class="code-block">
+                            <code>npm run start</code>
+                            <button class="copy-btn" onclick="copyToClipboard('npm run start')">
+                                📋
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setup-note" data-lang="en">
                 <div class="note-icon">💡</div>
                 <div class="note-content">
                     <strong>Pro Tip:</strong> For Spotify integration, you'll need a Spotify Premium account and API credentials. 
                     Check our <a href="#docs">documentation</a> for detailed setup instructions.
+                </div>
+            </div>
+            <div class="setup-note" data-lang="de" style="display: none;">
+                <div class="note-icon">💡</div>
+                <div class="note-content">
+                    <strong>Profi-Tipp:</strong> Für die Spotify-Integration benötigst du ein Spotify Premium-Konto und API-Zugangsdaten. 
+                    Schau in unsere <a href="#docs">Dokumentation</a> für detaillierte Installationsanweisungen.
                 </div>
             </div>
         </div>
@@ -360,12 +550,17 @@
     <!-- Documentation Section -->
     <section id="docs" class="docs">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-lang="en">
                 <h2 class="section-title">Documentation</h2>
                 <p class="section-subtitle">Everything you need to know about nJukebox</p>
             </div>
             
-            <div class="docs-grid">
+            <div class="section-header" data-lang="de" style="display: none;">
+                <h2 class="section-title">Dokumentation</h2>
+                <p class="section-subtitle">Alles, was Sie über nJukebox wissen müssen</p>
+            </div>
+            
+            <div class="docs-grid" data-lang="en">
                 <div class="doc-card">
                     <div class="doc-icon">🚀</div>
                     <h3>Getting Started</h3>
@@ -400,12 +595,42 @@
                     <p>Common issues and their solutions</p>
                     <a href="docs/troubleshooting.html" class="doc-link">Get Help →</a>
                 </div>
+            </div>
+            
+            <div class="docs-grid" data-lang="de" style="display: none;">
+                <div class="doc-card">
+                    <div class="doc-icon">🚀</div>
+                    <h3>Erste Schritte</h3>
+                    <p>Installation, Grundeinrichtung und Ihre erste Musiksession</p>
+                    <a href="docs/getting-started.html" class="doc-link">Anleitung lesen →</a>
+                </div>
 
                 <div class="doc-card">
-                    <div class="doc-icon">⚡</div>
-                    <h3>API Reference</h3>
-                    <p>Technical documentation for developers</p>
-                    <a href="docs/api-reference.html" class="doc-link">View API →</a>
+                    <div class="doc-icon">🟢</div>
+                    <h3>Spotify-Einrichtung</h3>
+                    <p>Spotify-Integration für Musik-Streaming konfigurieren</p>
+                    <a href="docs/spotify-setup.html" class="doc-link">Einrichtungsanleitung →</a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-icon">🎛️</div>
+                    <h3>Admin-Anleitung</h3>
+                    <p>Admin-Panel-Funktionen, Einstellungen und Event-Management</p>
+                    <a href="docs/admin-guide.html" class="doc-link">Mehr erfahren →</a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-icon">🔧</div>
+                    <h3>Konfiguration</h3>
+                    <p>Erweiterte Konfigurationsoptionen und Anpassungen</p>
+                    <a href="docs/configuration.html" class="doc-link">Konfigurieren →</a>
+                </div>
+
+                <div class="doc-card">
+                    <div class="doc-icon">🐛</div>
+                    <h3>Fehlerbehebung</h3>
+                    <p>Häufige Probleme und ihre Lösungen</p>
+                    <a href="docs/troubleshooting.html" class="doc-link">Hilfe erhalten →</a>
                 </div>
             </div>
         </div>
@@ -420,18 +645,22 @@
                         <span class="logo">🎵</span>
                         <span class="brand-name">nJukebox</span>
                     </div>
-                    <p class="footer-description">
+                    <p class="footer-description" data-lang="en">
                         A modern, open-source digital jukebox system for music lovers and event organizers.
+                    </p>
+                    <p class="footer-description" data-lang="de" style="display: none;">
+                        Ein modernes, quelloffenes digitales Jukebox-System für Musikliebhaber und Veranstalter.
                     </p>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Quick Links</h4>
+                    <h4 data-lang="en">Quick Links</h4>
+                    <h4 data-lang="de" style="display: none;">Schnellzugriff</h4>
                     <ul class="footer-links">
-                        <li><a href="#features">Features</a></li>
+                        <li><a href="#features"><span data-lang="en">Features</span><span data-lang="de" style="display: none;">Funktionen</span></a></li>
                         <li><a href="#demo">Demo</a></li>
                         <li><a href="#setup">Setup</a></li>
-                        <li><a href="#docs">Documentation</a></li>
+                        <li><a href="#docs"><span data-lang="en">Documentation</span><span data-lang="de" style="display: none;">Dokumentation</span></a></li>
                     </ul>
                 </div>
                 
@@ -439,25 +668,28 @@
                     <h4>Resources</h4>
                     <ul class="footer-links">
                         <li><a href="https://github.com/Nigcra/nJukebox" target="_blank">GitHub Repository</a></li>
-                        <li><a href="https://github.com/Nigcra/nJukebox/issues" target="_blank">Report Issues</a></li>
+                        <li><a href="https://github.com/Nigcra/nJukebox/issues" target="_blank"><span data-lang="en">Report Issues</span><span data-lang="de" style="display: none;">Probleme melden</span></a></li>
                         <li><a href="https://github.com/Nigcra/nJukebox/wiki" target="_blank">Wiki</a></li>
                         <li><a href="https://github.com/Nigcra/nJukebox/releases" target="_blank">Releases</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4>Community</h4>
+                    <h4 data-lang="en">Community</h4>
+                    <h4 data-lang="de" style="display: none;">Gemeinschaft</h4>
                     <ul class="footer-links">
-                        <li><a href="https://github.com/Nigcra/nJukebox/discussions" target="_blank">Discussions</a></li>
-                        <li><a href="https://github.com/Nigcra/nJukebox/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a></li>
-                        <li><a href="https://github.com/Nigcra/nJukebox/blob/main/LICENSE" target="_blank">License</a></li>
+                        <li><a href="https://github.com/Nigcra/nJukebox/discussions" target="_blank"><span data-lang="en">Discussions</span><span data-lang="de" style="display: none;">Diskussionen</span></a></li>
+                        <li><a href="https://github.com/Nigcra/nJukebox/blob/main/CONTRIBUTING.md" target="_blank"><span data-lang="en">Contributing</span><span data-lang="de" style="display: none;">Mitwirken</span></a></li>
+                        <li><a href="https://github.com/Nigcra/nJukebox/blob/main/LICENSE" target="_blank"><span data-lang="en">License</span><span data-lang="de" style="display: none;">Lizenz</span></a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 nJukebox. Open source under MIT License.</p>
-                <p>Made with ❤️ for music lovers everywhere</p>
+                <p data-lang="en">&copy; 2025 nJukebox. Open source under MIT License.</p>
+                <p data-lang="de" style="display: none;">&copy; 2025 nJukebox. Open Source unter MIT-Lizenz.</p>
+                <p data-lang="en">Made with ❤️ for music lovers everywhere</p>
+                <p data-lang="de" style="display: none;">Mit ❤️ gemacht für Musikliebhaber überall</p>
             </div>
         </div>
     </footer>
