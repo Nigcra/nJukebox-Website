@@ -513,3 +513,27 @@ window.addEventListener('scroll', function() {
         heroVisual.style.transform = `translateY(${speed}px)`;
     }
 });
+
+// Screenshot Gallery functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function() {
+            const targetScreenshot = this.dataset.target;
+            const gallery = this.closest('.demo-gallery');
+            
+            // Update active thumbnail
+            gallery.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Update active screenshot
+            gallery.querySelectorAll('.screenshot').forEach(s => {
+                s.classList.remove('active');
+                if (s.dataset.screenshot === targetScreenshot) {
+                    s.classList.add('active');
+                }
+            });
+        });
+    });
+});

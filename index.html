@@ -113,36 +113,9 @@
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="jukebox-preview">
-                    <div class="preview-screen">
-                        <div class="screen-header">
-                            <div class="screen-controls">
-                                <span class="control red"></span>
-                                <span class="control yellow"></span>
-                                <span class="control green"></span>
-                            </div>
-                            <div class="screen-title">nJukebox</div>
-                        </div>
-                        <div class="screen-content">
-                            <div class="now-playing">
-                                <div class="album-art"></div>
-                                <div class="track-info">
-                                    <div class="track-title">Now Playing</div>
-                                    <div class="track-artist">Artist - Song Title</div>
-                                </div>
-                            </div>
-                            <div class="visualizer">
-                                <div class="bar"></div>
-                                <div class="bar"></div>
-                                <div class="bar"></div>
-                                <div class="bar"></div>
-                                <div class="bar"></div>
-                                <div class="bar"></div>
-                                <div class="bar"></div>
-                                <div class="bar"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="hero-screenshot">
+                    <img src="screenshots/nowplaying2.png" alt="nJukebox Interface" class="main-screenshot">
+                    <div class="screenshot-glow"></div>
                 </div>
             </div>
         </div>
@@ -323,13 +296,29 @@
             </div>
             
             <div class="demo-container" data-lang="en">
-                <div class="demo-screenshot">
-                    <img src="screenshots/main-interface.png" alt="nJukebox Main Interface" class="screenshot">
-                    <div class="screenshot-overlay">
-                        <div class="play-button">
-                            <svg width="60" height="60" fill="white" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
+                <div class="demo-gallery">
+                    <div class="gallery-main">
+                        <img src="screenshots/main.png" alt="nJukebox Main Interface" class="screenshot active" data-screenshot="main">
+                        <img src="screenshots/nowplaying.png" alt="Now Playing" class="screenshot" data-screenshot="nowplaying">
+                        <img src="screenshots/search.png" alt="Search Interface" class="screenshot" data-screenshot="search">
+                        <img src="screenshots/admin.png" alt="Admin Panel" class="screenshot" data-screenshot="admin">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="thumbnail active" data-target="main">
+                            <img src="screenshots/main.png" alt="Main">
+                            <span>Main Interface</span>
+                        </div>
+                        <div class="thumbnail" data-target="nowplaying">
+                            <img src="screenshots/nowplaying.png" alt="Now Playing">
+                            <span>Now Playing</span>
+                        </div>
+                        <div class="thumbnail" data-target="search">
+                            <img src="screenshots/search.png" alt="Search">
+                            <span>Search</span>
+                        </div>
+                        <div class="thumbnail" data-target="admin">
+                            <img src="screenshots/admin.png" alt="Admin">
+                            <span>Admin Panel</span>
                         </div>
                     </div>
                 </div>
@@ -362,13 +351,29 @@
             </div>
 
             <div class="demo-container" data-lang="de" style="display: none;">
-                <div class="demo-screenshot">
-                    <img src="screenshots/main-interface.png" alt="nJukebox Hauptoberfläche" class="screenshot">
-                    <div class="screenshot-overlay">
-                        <div class="play-button">
-                            <svg width="60" height="60" fill="white" viewBox="0 0 24 24">
-                                <path d="M8 5v14l11-7z"/>
-                            </svg>
+                <div class="demo-gallery">
+                    <div class="gallery-main">
+                        <img src="screenshots/main.png" alt="nJukebox Hauptoberfläche" class="screenshot active" data-screenshot="main">
+                        <img src="screenshots/nowplaying.png" alt="Aktuell läuft" class="screenshot" data-screenshot="nowplaying">
+                        <img src="screenshots/search.png" alt="Suche" class="screenshot" data-screenshot="search">
+                        <img src="screenshots/admin.png" alt="Admin-Panel" class="screenshot" data-screenshot="admin">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="thumbnail active" data-target="main">
+                            <img src="screenshots/main.png" alt="Hauptansicht">
+                            <span>Hauptansicht</span>
+                        </div>
+                        <div class="thumbnail" data-target="nowplaying">
+                            <img src="screenshots/nowplaying.png" alt="Aktuell läuft">
+                            <span>Aktuell läuft</span>
+                        </div>
+                        <div class="thumbnail" data-target="search">
+                            <img src="screenshots/search.png" alt="Suche">
+                            <span>Suche</span>
+                        </div>
+                        <div class="thumbnail" data-target="admin">
+                            <img src="screenshots/admin.png" alt="Admin">
+                            <span>Admin-Panel</span>
                         </div>
                     </div>
                 </div>

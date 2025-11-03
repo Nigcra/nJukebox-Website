@@ -376,6 +376,58 @@ body {
     padding: 0 20px;
 }
 
+.hero-screenshot {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+}
+
+.main-screenshot {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.hero-screenshot:hover .main-screenshot {
+    transform: scale(1.02);
+}
+
+.screenshot-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    background: radial-gradient(circle, rgba(29, 185, 84, 0.3) 0%, transparent 70%);
+    filter: blur(40px);
+    z-index: -1;
+    opacity: 0.6;
+    animation: glow-pulse 4s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
 .jukebox-preview {
     width: 100%;
     max-width: 500px;
@@ -573,6 +625,84 @@ body {
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
+}
+
+/* Screenshot Gallery */
+.demo-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.gallery-main {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    background: var(--background-darker);
+}
+
+.gallery-main .screenshot {
+    width: 100%;
+    height: auto;
+    display: none;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-main .screenshot.active {
+    display: block;
+}
+
+.gallery-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.thumbnail {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    background: var(--background-light);
+}
+
+.thumbnail:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.thumbnail.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(29, 185, 84, 0.3);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.thumbnail:hover img,
+.thumbnail.active img {
+    opacity: 1;
+}
+
+.thumbnail span {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 0.85rem;
+    text-align: center;
+    font-weight: 500;
 }
 
 .demo-screenshot {
