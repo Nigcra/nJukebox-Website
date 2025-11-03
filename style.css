@@ -1215,6 +1215,186 @@ html {
     text-decoration: underline;
 }
 
+/* Support Section */
+.support-section {
+    padding: 80px 0;
+    background: linear-gradient(180deg, var(--background-color) 0%, var(--background-darker) 100%);
+}
+
+.support-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.support-text {
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--text-secondary);
+    font-size: 1.1em;
+    line-height: 1.8;
+}
+
+.support-text ul {
+    text-align: left;
+    max-width: 600px;
+    margin: 30px auto;
+    list-style: none;
+    padding: 0;
+}
+
+.support-text li {
+    margin: 15px 0;
+    padding-left: 10px;
+    font-size: 1em;
+}
+
+.support-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin: 50px 0;
+}
+
+.support-card {
+    background: linear-gradient(135deg, var(--background-lighter), var(--background-color));
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.support-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(29, 185, 84, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.support-card:hover::before {
+    opacity: 1;
+}
+
+.support-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-color);
+    box-shadow: 0 20px 60px rgba(29, 185, 84, 0.3);
+}
+
+.support-card-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.2), rgba(29, 185, 84, 0.05));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    transition: all 0.4s ease;
+}
+
+.support-card:hover .support-card-icon {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 0 40px rgba(29, 185, 84, 0.4);
+}
+
+.support-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.support-card p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.support-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: #000;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.github-sponsors:hover .support-card-icon {
+    color: #ea4aaa;
+}
+
+.github-sponsors:hover {
+    border-color: #ea4aaa;
+    box-shadow: 0 20px 60px rgba(234, 74, 170, 0.3);
+}
+
+.kofi:hover .support-card-icon {
+    color: #13C3FF;
+}
+
+.kofi:hover {
+    border-color: #13C3FF;
+    box-shadow: 0 20px 60px rgba(19, 195, 255, 0.3);
+}
+
+.paypal:hover .support-card-icon {
+    color: #00457C;
+}
+
+.paypal:hover {
+    border-color: #0070BA;
+    box-shadow: 0 20px 60px rgba(0, 112, 186, 0.3);
+}
+
+.support-message {
+    text-align: center;
+    margin-top: 50px;
+    padding: 30px;
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.1), rgba(29, 185, 84, 0.05));
+    border-radius: 15px;
+    border: 1px solid rgba(29, 185, 84, 0.2);
+}
+
+.support-message p {
+    font-size: 1.1em;
+    color: var(--text-color);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Support Button in Navbar */
+.support-btn {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.2), rgba(29, 185, 84, 0.1));
+    border: 1px solid rgba(29, 185, 84, 0.3);
+    border-radius: 8px;
+    padding: 8px 16px !important;
+    transition: all 0.3s ease;
+}
+
+.support-btn:hover {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.3), rgba(29, 185, 84, 0.15));
+    border-color: rgba(29, 185, 84, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.3);
+}
+
+.support-btn svg {
+    color: #ea4aaa;
+    filter: drop-shadow(0 0 8px rgba(234, 74, 170, 0.5));
+}
+
 /* Documentation Section */
 .docs {
     padding: 100px 0;
@@ -1324,6 +1504,34 @@ html {
 
 .footer-links a:hover {
     color: var(--primary-color);
+}
+
+/* Support Links Styling */
+.support-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    margin: 2px 0;
+    border-radius: 6px;
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.1), rgba(29, 185, 84, 0.05));
+    border: 1px solid rgba(29, 185, 84, 0.2);
+    transition: all 0.3s ease;
+}
+
+.support-link:hover {
+    background: linear-gradient(135deg, rgba(29, 185, 84, 0.2), rgba(29, 185, 84, 0.1));
+    border-color: rgba(29, 185, 84, 0.4);
+    transform: translateX(5px);
+    box-shadow: 0 0 20px rgba(29, 185, 84, 0.3);
+}
+
+.support-link svg {
+    flex-shrink: 0;
+}
+
+.support-note {
+    color: var(--text-secondary);
+    font-style: italic;
 }
 
 .footer-bottom {
