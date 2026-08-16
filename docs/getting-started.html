@@ -267,12 +267,15 @@
 
             <h2>System Requirements</h2>
             <ul>
-                <li><strong>Node.js</strong> 14.0 or higher</li>
-                <li><strong>npm</strong> 6.0 or higher</li>
-                <li><strong>Modern web browser</strong> with Widevine DRM support (Chrome, Firefox, Safari, Edge)</li>
-                <li><strong>MP3 music files</strong> (optional, for local library)</li>
+                <li><strong>Go</strong> 1.26 or newer &mdash; only needed to build; the resulting binary runs on its own</li>
+                <li><strong>Chromium-based browser</strong> (Chrome or Edge) for Spotify playback &mdash; the Spotify Web Playback SDK needs the Widevine module. Local playback works in any browser.</li>
+                <li><strong>MP3 or FLAC music files</strong> (optional, for local library)</li>
                 <li><strong>Spotify Premium account</strong> (optional, for streaming)</li>
             </ul>
+
+            <div class="info">
+                <strong>Note:</strong> nJukebox (short for <em>Nico's Jukebox</em>) started as a Node.js project and has been completely rewritten in Go &mdash; a single statically linked binary with no runtime dependencies.
+            </div>
 
             <h2>Installation Steps</h2>
 
@@ -280,40 +283,44 @@
             <pre><code>git clone https://github.com/Nigcra/nJukebox.git
 cd nJukebox</code></pre>
 
-            <h3>2. Install Dependencies</h3>
-            <pre><code>npm install</code></pre>
+            <h3>2. Build the Binary</h3>
+            <pre><code>go build -o njukebox ./cmd/njukebox</code></pre>
 
             <div class="info">
-                <strong>Note:</strong> This will install all required Node.js packages including Express.js, SQLite3, and other dependencies.
+                <strong>Note:</strong> On Windows the binary is <code>njukebox.exe</code>. Go is only needed for this step &mdash; the binary is statically linked and has no runtime dependencies.
             </div>
 
             <h3>3. Prepare Your Music Library</h3>
-            <p>Copy your MP3 files to the <code>music/</code> directory:</p>
+            <p>Copy your MP3 and FLAC files to the <code>music/</code> directory (the server creates it on first start):</p>
             <pre><code># Create music directory if it doesn't exist
 mkdir -p music
 
-# Copy your MP3 files
+# Copy your music files
 cp /path/to/your/music/*.mp3 music/</code></pre>
 
             <div class="warning">
-                <strong>Important:</strong> Only MP3 files are currently supported. Make sure your files have proper ID3 tags for best results.
+                <strong>Important:</strong> MP3 and FLAC files are supported. Make sure your files have proper metadata tags for best results. The application scans on startup and watches the folder while it runs.
             </div>
 
             <h3>4. Start the System</h3>
-            <p>nJukebox consists of two components that need to be running:</p>
+            <p>One binary serves both the web interface and the data server:</p>
 
             <h4>Option A: Start Everything (Recommended)</h4>
-            <pre><code>npm start</code></pre>
+            <pre><code>./njukebox</code></pre>
 
             <h4>Option B: Start Components Separately</h4>
-            <pre><code># Terminal 1: Start the data server
-npm run server
+            <pre><code># Only the data server
+./njukebox --data-only
 
-# Terminal 2: Start the web interface
-npm run web</code></pre>
+# Only the web server
+./njukebox --web-only</code></pre>
 
             <div class="success">
-                <strong>Success!</strong> nJukebox should now be running at <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>
+                <strong>Success!</strong> nJukebox should now be running at <a href="http://127.0.0.1:5500" target="_blank">http://127.0.0.1:5500</a>
+            </div>
+
+            <div class="info">
+                <strong>Tip:</strong> Use <code>127.0.0.1</code>, not <code>localhost</code> &mdash; Spotify only accepts unencrypted HTTP redirect URIs for the loopback address.
             </div>
 
             <h2>First Time Setup</h2>
@@ -398,12 +405,15 @@ npm run web</code></pre>
 
             <h2>Systemanforderungen</h2>
             <ul>
-                <li><strong>Node.js</strong> 14.0 oder höher</li>
-                <li><strong>npm</strong> 6.0 oder höher</li>
-                <li><strong>Moderner Webbrowser</strong> mit Widevine DRM-Unterstützung (Chrome, Firefox, Safari, Edge)</li>
-                <li><strong>MP3-Musikdateien</strong> (optional, für lokale Bibliothek)</li>
+                <li><strong>Go</strong> 1.26 oder neuer &mdash; nur zum Bauen nötig; das fertige Binary läuft eigenständig</li>
+                <li><strong>Chromium-basierter Browser</strong> (Chrome oder Edge) für Spotify-Wiedergabe &mdash; das Spotify Web Playback SDK benötigt das Widevine-Modul. Lokale Wiedergabe funktioniert in jedem Browser.</li>
+                <li><strong>MP3- oder FLAC-Musikdateien</strong> (optional, für lokale Bibliothek)</li>
                 <li><strong>Spotify Premium-Account</strong> (optional, für Streaming)</li>
             </ul>
+
+            <div class="info">
+                <strong>Hinweis:</strong> nJukebox (kurz für <em>Nico's Jukebox</em>) begann als Node.js-Projekt und wurde vollständig in Go neu geschrieben &mdash; ein einzelnes, statisch gelinktes Binary ohne Laufzeitabhängigkeiten.
+            </div>
 
             <h2>Installationsschritte</h2>
 
@@ -411,40 +421,44 @@ npm run web</code></pre>
             <pre><code>git clone https://github.com/Nigcra/nJukebox.git
 cd nJukebox</code></pre>
 
-            <h3>2. Abhängigkeiten installieren</h3>
-            <pre><code>npm install</code></pre>
+            <h3>2. Binary bauen</h3>
+            <pre><code>go build -o njukebox ./cmd/njukebox</code></pre>
 
             <div class="info">
-                <strong>Hinweis:</strong> Dies installiert alle erforderlichen Node.js-Pakete einschließlich Express.js, SQLite3 und andere Abhängigkeiten.
+                <strong>Hinweis:</strong> Unter Windows heißt das Binary <code>njukebox.exe</code>. Go wird nur für diesen Schritt benötigt &mdash; das Binary ist statisch gelinkt und hat keine Laufzeitabhängigkeiten.
             </div>
 
             <h3>3. Musikbibliothek vorbereiten</h3>
-            <p>Kopieren Sie Ihre MP3-Dateien in das <code>music/</code> Verzeichnis:</p>
+            <p>Kopieren Sie Ihre MP3- und FLAC-Dateien in das <code>music/</code> Verzeichnis (der Server erstellt es beim ersten Start):</p>
             <pre><code># Musikverzeichnis erstellen, falls es nicht existiert
 mkdir -p music
 
-# Ihre MP3-Dateien kopieren
+# Ihre Musikdateien kopieren
 cp /pfad/zu/ihrer/musik/*.mp3 music/</code></pre>
 
             <div class="warning">
-                <strong>Wichtig:</strong> Derzeit werden nur MP3-Dateien unterstützt. Stellen Sie sicher, dass Ihre Dateien ordnungsgemäße ID3-Tags haben für beste Ergebnisse.
+                <strong>Wichtig:</strong> MP3- und FLAC-Dateien werden unterstützt. Stellen Sie sicher, dass Ihre Dateien ordnungsgemäße Metadaten-Tags haben. Die Anwendung scannt beim Start und überwacht den Ordner im laufenden Betrieb.
             </div>
 
             <h3>4. System starten</h3>
-            <p>nJukebox besteht aus zwei Komponenten, die laufen müssen:</p>
+            <p>Ein Binary bedient sowohl die Web-Oberfläche als auch den Datenserver:</p>
 
             <h4>Option A: Alles starten (empfohlen)</h4>
-            <pre><code>npm start</code></pre>
+            <pre><code>./njukebox</code></pre>
 
             <h4>Option B: Komponenten separat starten</h4>
-            <pre><code># Terminal 1: Datenserver starten
-npm run server
+            <pre><code># Nur der Datenserver
+./njukebox --data-only
 
-# Terminal 2: Web-Interface starten
-npm run web</code></pre>
+# Nur der Webserver
+./njukebox --web-only</code></pre>
 
             <div class="success">
-                <strong>Erfolg!</strong> nJukebox sollte jetzt unter <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> laufen
+                <strong>Erfolg!</strong> nJukebox sollte jetzt unter <a href="http://127.0.0.1:5500" target="_blank">http://127.0.0.1:5500</a> laufen
+            </div>
+
+            <div class="info">
+                <strong>Tipp:</strong> Verwenden Sie <code>127.0.0.1</code>, nicht <code>localhost</code> &mdash; Spotify akzeptiert unverschlüsselte HTTP-Redirect-URIs nur für die Loopback-Adresse.
             </div>
 
             <h2>Ersteinrichtung</h2>

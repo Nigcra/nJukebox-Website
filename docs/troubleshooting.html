@@ -310,7 +310,7 @@
             <div class="diagnostic-checklist">
                 <h4>System Status Check</h4>
                 <p><input type="checkbox" id="server-running"><label for="server-running">nJukebox server is running</label></p>
-                <p><input type="checkbox" id="browser-access"><label for="browser-access">Can access http://localhost:3000 in browser</label></p>
+                <p><input type="checkbox" id="browser-access"><label for="browser-access">Can access http://127.0.0.1:5500 in browser</label></p>
                 <p><input type="checkbox" id="music-files"><label for="music-files">Music files exist in the /music directory</label></p>
                 <p><input type="checkbox" id="admin-access"><label for="admin-access">Admin panel accessible with PIN</label></p>
                 <p><input type="checkbox" id="library-visible"><label for="library-visible">Music library shows tracks</label></p>
@@ -324,18 +324,15 @@
                 <p><strong>Symptoms:</strong> Error messages when running startup scripts, server won't start</p>
                 <p><strong>Causes & Solutions:</strong></p>
                 <ul>
-                    <li><strong>Port already in use:</strong> Another application is using port 3000
-                        <pre><code># Find what's using port 3000
-netstat -ano | findstr :3000
-# Kill the process using task manager or change port in config.json</code></pre>
+                    <li><strong>Port already in use:</strong> Another application is using port 5500 or 3001
+                        <pre><code># Find what's using the ports
+netstat -ano | findstr :5500
+netstat -ano | findstr :3001
+# Kill the process using task manager or change the ports in config.json</code></pre>
                     </li>
-                    <li><strong>Missing Node.js:</strong> Node.js not installed or not in PATH
-                        <pre><code># Check Node.js installation
-node --version
-npm --version</code></pre>
-                    </li>
-                    <li><strong>Missing dependencies:</strong> NPM packages not installed
-                        <pre><code>npm install</code></pre>
+                    <li><strong>Binary not built:</strong> The Go binary has not been compiled yet
+                        <pre><code># Build the binary (Go is only needed to build)
+go build -o njukebox ./cmd/njukebox</code></pre>
                     </li>
                     <li><strong>Permission issues:</strong> Script can't access files/directories
                         <pre><code># Run as administrator or check file permissions</code></pre>
@@ -383,7 +380,7 @@ npm --version</code></pre>
                     <li><strong>Browser autoplay policy:</strong> Browser blocks autoplay
                         <ul>
                             <li>Click anywhere on the page to enable audio</li>
-                            <li>Allow autoplay for localhost in browser settings</li>
+                            <li>Allow autoplay for 127.0.0.1 in browser settings</li>
                         </ul>
                     </li>
                     <li><strong>Audio codec issues:</strong> Browser can't decode audio format
@@ -394,7 +391,7 @@ npm --version</code></pre>
                     </li>
                     <li><strong>CORS issues:</strong> Cross-origin restrictions blocking audio
                         <ul>
-                            <li>Ensure accessing via localhost:3000, not file://</li>
+                            <li>Ensure accessing via 127.0.0.1:5500, not file://</li>
                             <li>Check console for CORS errors</li>
                         </ul>
                     </li>
@@ -415,7 +412,7 @@ npm --version</code></pre>
                     <li><strong>Wrong PIN:</strong> Using incorrect admin PIN
                         <ul>
                             <li>Default PIN is 1234</li>
-                            <li>Check config.json for custom PIN</li>
+                            <li>The PIN is stored in the settings database and can be changed in the Admin Panel</li>
                         </ul>
                     </li>
                     <li><strong>JavaScript errors:</strong> Browser errors preventing admin panel
@@ -520,10 +517,10 @@ npm --version</code></pre>
                 <h4>🌐 Cannot Access from Other Devices</h4>
                 <p><strong>Solutions:</strong></p>
                 <ol>
-                    <li>Change <code>host</code> from "localhost" to "0.0.0.0" in config.json</li>
-                    <li>Configure Windows Firewall to allow port 3000</li>
+                    <li>Change <code>host</code> from "127.0.0.1" to "0.0.0.0" in config.json</li>
+                    <li>Configure Windows Firewall to allow ports 5500 and 3001</li>
                     <li>Find your computer's IP address: <code>ipconfig</code></li>
-                    <li>Access from other devices using: <code>http://YOUR_IP:3000</code></li>
+                    <li>Access from other devices using: <code>http://YOUR_IP:5500</code></li>
                 </ol>
             </div>
 
@@ -534,7 +531,7 @@ npm --version</code></pre>
                     <li>Open Windows Defender Firewall</li>
                     <li>Click "Allow an app or feature through Windows Defender Firewall"</li>
                     <li>Click "Change Settings" then "Allow another app..."</li>
-                    <li>Browse to Node.js executable or add port 3000</li>
+                    <li>Browse to the njukebox binary or add ports 5500 and 3001</li>
                     <li>Enable for both Private and Public networks</li>
                 </ol>
             </div>
@@ -558,13 +555,13 @@ npm --version</code></pre>
             <h2>Error Messages</h2>
 
             <div class="error">
-                <h4>"EADDRINUSE: address already in use"</h4>
-                <p>Port 3000 is being used by another application. Either close the other application or change the port in config.json.</p>
+                <h4>"bind: address already in use"</h4>
+                <p>Port 5500 or 3001 is being used by another application. Either close the other application or change the ports in config.json.</p>
             </div>
 
             <div class="error">
-                <h4>"Cannot find module 'express'"</h4>
-                <p>Dependencies are not installed. Run <code>npm install</code> in the nJukebox directory.</p>
+                <h4>"go: command not found"</h4>
+                <p>Go is not installed or not in PATH. Go is only needed to build the binary &mdash; a prebuilt binary runs without it.</p>
             </div>
 
             <div class="error">
@@ -582,8 +579,7 @@ npm --version</code></pre>
             <h3>Enabling Debug Mode</h3>
             <p>Enable detailed logging to diagnose issues:</p>
             <ol>
-                <li>Set <code>"debug": true</code> in config.json</li>
-                <li>Restart nJukebox server</li>
+                <li>Enable the debug toggle in the Admin Panel settings</li>
                 <li>Open browser developer tools (F12)</li>
                 <li>Check Console tab for detailed messages</li>
                 <li>Monitor server terminal for backend logs</li>
@@ -604,7 +600,7 @@ npm --version</code></pre>
             <p>When seeking help, collect this information:</p>
             <ul>
                 <li>Operating system and version</li>
-                <li>Node.js and npm versions</li>
+                <li>Go version (only when building from source)</li>
                 <li>Browser and version</li>
                 <li>nJukebox version/commit</li>
                 <li>Complete error messages</li>
@@ -620,7 +616,7 @@ npm --version</code></pre>
                 <li>Test with a small number of MP3 files</li>
                 <li>Disable Spotify integration</li>
                 <li>Test in Chrome with no extensions</li>
-                <li>Access only via localhost:3000</li>
+                <li>Access only via 127.0.0.1:5500</li>
             </ol>
 
             <div class="success">
@@ -653,7 +649,7 @@ npm --version</code></pre>
             <div class="diagnostic-checklist">
                 <h4>Systemstatus-Check</h4>
                 <p><input type="checkbox" id="server-running-de"><label for="server-running-de">nJukebox-Server läuft</label></p>
-                <p><input type="checkbox" id="browser-access-de"><label for="browser-access-de">Zugriff auf http://localhost:3000 im Browser möglich</label></p>
+                <p><input type="checkbox" id="browser-access-de"><label for="browser-access-de">Zugriff auf http://127.0.0.1:5500 im Browser möglich</label></p>
                 <p><input type="checkbox" id="music-files-de"><label for="music-files-de">Musikdateien existieren im /music Verzeichnis</label></p>
                 <p><input type="checkbox" id="admin-access-de"><label for="admin-access-de">Admin-Panel mit PIN erreichbar</label></p>
                 <p><input type="checkbox" id="library-visible-de"><label for="library-visible-de">Musikbibliothek zeigt Tracks an</label></p>
@@ -667,18 +663,15 @@ npm --version</code></pre>
                 <p><strong>Symptome:</strong> Fehlermeldungen beim Ausführen der Startskripte, Server startet nicht</p>
                 <p><strong>Ursachen & Lösungen:</strong></p>
                 <ul>
-                    <li><strong>Port bereits belegt:</strong> Eine andere Anwendung nutzt Port 3000
-                        <pre><code># Finde heraus, was Port 3000 nutzt
-netstat -ano | findstr :3000
-# Prozess im Task-Manager beenden oder Port in config.json ändern</code></pre>
+                    <li><strong>Port bereits belegt:</strong> Eine andere Anwendung nutzt Port 5500 oder 3001
+                        <pre><code># Finde heraus, was die Ports nutzt
+netstat -ano | findstr :5500
+netstat -ano | findstr :3001
+# Prozess im Task-Manager beenden oder Ports in config.json ändern</code></pre>
                     </li>
-                    <li><strong>Node.js fehlt:</strong> Node.js nicht installiert oder nicht im PATH
-                        <pre><code># Node.js Installation prüfen
-node --version
-npm --version</code></pre>
-                    </li>
-                    <li><strong>Fehlende Abhängigkeiten:</strong> NPM-Pakete nicht installiert
-                        <pre><code>npm install</code></pre>
+                    <li><strong>Binary nicht gebaut:</strong> Das Go-Binary wurde noch nicht kompiliert
+                        <pre><code># Binary bauen (Go wird nur zum Bauen benötigt)
+go build -o njukebox ./cmd/njukebox</code></pre>
                     </li>
                 </ul>
             </div>
@@ -711,8 +704,8 @@ npm --version</code></pre>
                 <p><strong>Checkliste:</strong></p>
                 <ul>
                     <li>Spotify Premium-Konto erforderlich (kostenlose Konten funktionieren nicht)</li>
-                    <li>Client ID in config.json korrekt eingetragen</li>
-                    <li>Redirect URI in Spotify Developer Dashboard: <code>http://localhost:3000/spotify_login.html</code></li>
+                    <li>Client ID im Admin-Panel korrekt eingetragen</li>
+                    <li>Redirect URI in Spotify Developer Dashboard: <code>http://127.0.0.1:5500/spotify_login.html</code></li>
                     <li>Internetverbindung aktiv</li>
                     <li>Browser erlaubt Pop-ups für die nJukebox-Domain</li>
                     <li>Widevine DRM im Browser aktiviert</li>
@@ -721,13 +714,12 @@ npm --version</code></pre>
 
             <div class="troubleshoot-item">
                 <h4>🔒 Admin-PIN vergessen</h4>
-                <p><strong>Lösung:</strong> PIN in config.json zurücksetzen</p>
+                <p><strong>Lösung:</strong> Die PIN wird in der Einstellungs-Datenbank gespeichert (Standard: 1234)</p>
                 <ol>
                     <li>nJukebox-Server stoppen</li>
-                    <li><code>config.json</code> öffnen</li>
-                    <li>Unter <code>"app"</code> → <code>"adminPin"</code> auf <code>"1234"</code> setzen</li>
+                    <li><code>data/app.db</code> sichern und löschen (setzt alle Einstellungen zurück, auch den Spotify-Login)</li>
                     <li>Server neu starten</li>
-                    <li>Mit Standard-PIN 1234 anmelden und neue PIN setzen</li>
+                    <li>Mit Standard-PIN 1234 anmelden und neue PIN im Admin-Panel setzen</li>
                 </ol>
             </div>
 
@@ -763,10 +755,7 @@ npm --version</code></pre>
 
             <h3>Hoher Speicherverbrauch</h3>
             <pre><code># Datenbank-Cleanup durchführen
-# Im Admin-Panel: "Datenbank bereinigen"
-
-# Oder manuell:
-npm run cleanup</code></pre>
+# Im Admin-Panel: "Datenbank bereinigen"</code></pre>
 
             <h2>Datenbank-Probleme</h2>
 
@@ -797,8 +786,8 @@ xcopy data\*.db backup\ /Y
             <ol>
                 <li>In config.json: <code>"host": "0.0.0.0"</code> setzen</li>
                 <li>Server neu starten</li>
-                <li>Windows-Firewall: Port 3000 freigeben</li>
-                <li>Im Browser: <code>http://[SERVER-IP]:3000</code> öffnen</li>
+                <li>Windows-Firewall: Ports 5500 und 3001 freigeben</li>
+                <li>Im Browser: <code>http://[SERVER-IP]:5500</code> öffnen</li>
             </ol>
 
             <pre><code># IP-Adresse finden (Windows)

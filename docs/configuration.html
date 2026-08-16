@@ -300,62 +300,33 @@
 
             <div class="file-structure">
 <span class="folder">nJukebox/</span>
-├── <span class="file">config.json</span>           # Main application configuration
-├── <span class="file">package.json</span>          # Node.js dependencies and scripts
-├── <span class="folder">data/</span>
-│   ├── <span class="file">app.db</span>             # Application database (SQLite)
-│   ├── <span class="file">music.db</span>           # Music library database
-│   └── <span class="file">custom_playlists.json</span> # Saved custom playlists
-├── <span class="folder">locales/</span>
-│   ├── <span class="file">en.json</span>            # English translations
-│   └── <span class="file">de.json</span>            # German translations
-└── <span class="folder">lib/</span>
-    └── <span class="file">valid_genres.js</span>    # Supported music genres
+├── <span class="file">config.json</span>           # Server configuration (host and ports)
+├── <span class="file">njukebox</span>              # Compiled Go binary (njukebox.exe on Windows)
+├── <span class="folder">cmd/njukebox/</span>        # Go entry point
+├── <span class="folder">internal/</span>            # Go server implementation
+├── <span class="folder">web/</span>                 # Everything the browser loads
+│   ├── <span class="file">jukebox.html</span>  <span class="file">style.css</span>  <span class="file">jukebox.js</span>
+│   └── <span class="folder">js/</span>  <span class="folder">assets/</span>  <span class="folder">locales/</span>
+├── <span class="folder">music/</span>               # Local music library
+└── <span class="folder">data/</span>
+    ├── <span class="file">app.db</span>             # Queue, session, settings, Spotify tokens
+    └── <span class="file">music.db</span>           # Music library database
             </div>
 
             <h2>Main Configuration (config.json)</h2>
-            <p>The main configuration file contains core application settings:</p>
+            <p>The configuration file only covers the server addresses. A missing config.json is fine &mdash; the defaults below apply:</p>
 
             <pre><code>{
-  "app": {
-    "port": 3000,
-    "host": "localhost",
-    "adminPin": "1234",
-    "sessionTimeout": 3600,
-    "maxPlaylistSize": 100
-  },
-  "audio": {
-    "defaultVolume": 0.8,
-    "fadeTime": 3000,
-    "trackLockTime": 10,
-    "autoDJ": true
-  },
-  "spotify": {
-    "clientId": "",
-    "clientSecret": "",
-    "redirectUri": "http://localhost:3000/spotify-callback"
-  },
-  "library": {
-    "musicPath": "./music",
-    "supportedFormats": [".mp3", ".flac", ".m4a", ".ogg"],
-    "autoScan": true,
-    "scanInterval": 300000
-  },
-  "visualization": {
-    "enabled": true,
-    "effects": ["space", "fire", "particles", "circles"],
-    "switchInterval": 30
-  },
-  "reporting": {
-    "enabled": true,
-    "gemaCompliance": true,
-    "logDetail": "detailed"
+  "server": {
+    "host": "127.0.0.1",
+    "webPort": 5500,
+    "dataPort": 3001
   }
 }</code></pre>
 
             <h2>Configuration Options</h2>
 
-            <h3>Application Settings</h3>
+            <h3>Server Settings</h3>
             <table class="config-table">
                 <thead>
                     <tr>
@@ -366,127 +337,40 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>port</code></td>
-                        <td>3000</td>
-                        <td>Web server port</td>
-                    </tr>
-                    <tr>
                         <td><code>host</code></td>
-                        <td>localhost</td>
+                        <td>127.0.0.1</td>
                         <td>Bind address (use 0.0.0.0 for network access)</td>
                     </tr>
                     <tr>
-                        <td><code>adminPin</code></td>
-                        <td>1234</td>
-                        <td>Admin panel access code</td>
+                        <td><code>webPort</code></td>
+                        <td>5500</td>
+                        <td>Web server port (the interface you open in the browser)</td>
                     </tr>
                     <tr>
-                        <td><code>sessionTimeout</code></td>
-                        <td>3600</td>
-                        <td>Admin session timeout (seconds)</td>
-                    </tr>
-                    <tr>
-                        <td><code>maxPlaylistSize</code></td>
-                        <td>100</td>
-                        <td>Maximum tracks in playlist</td>
+                        <td><code>dataPort</code></td>
+                        <td>3001</td>
+                        <td>Data server port (REST API used by the frontend)</td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3>Audio Settings</h3>
-            <table class="config-table">
-                <thead>
-                    <tr>
-                        <th>Setting</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>defaultVolume</code></td>
-                        <td>0.8</td>
-                        <td>Default audio volume (0.0-1.0)</td>
-                    </tr>
-                    <tr>
-                        <td><code>fadeTime</code></td>
-                        <td>3000</td>
-                        <td>Crossfade duration (milliseconds)</td>
-                    </tr>
-                    <tr>
-                        <td><code>trackLockTime</code></td>
-                        <td>10</td>
-                        <td>Minutes to lock recently played tracks</td>
-                    </tr>
-                    <tr>
-                        <td><code>autoDJ</code></td>
-                        <td>true</td>
-                        <td>Automatically add tracks when playlist is empty</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h3>Runtime Settings (Admin Panel)</h3>
+            <p>Everything else is configured at runtime in the Admin Panel and stored in the settings database (<code>data/app.db</code>):</p>
+            <ul>
+                <li><strong>Admin PIN</strong> (default: 1234)</li>
+                <li><strong>Language</strong> (German / English)</li>
+                <li><strong>Auto-DJ</strong> and track lock time</li>
+                <li><strong>Visualization effects</strong> and theming</li>
+                <li><strong>Spotify Client ID</strong> and login</li>
+            </ul>
 
-            <h3>Library Settings</h3>
-            <table class="config-table">
-                <thead>
-                    <tr>
-                        <th>Setting</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>musicPath</code></td>
-                        <td>./music</td>
-                        <td>Path to music directory</td>
-                    </tr>
-                    <tr>
-                        <td><code>supportedFormats</code></td>
-                        <td>[".mp3", ".flac", ".m4a", ".ogg"]</td>
-                        <td>Supported audio file formats</td>
-                    </tr>
-                    <tr>
-                        <td><code>autoScan</code></td>
-                        <td>true</td>
-                        <td>Automatically scan for new music</td>
-                    </tr>
-                    <tr>
-                        <td><code>scanInterval</code></td>
-                        <td>300000</td>
-                        <td>Auto-scan interval (milliseconds)</td>
-                    </tr>
-                </tbody>
-            </table>
+            <h2>Command-Line Flags</h2>
+            <p>One binary serves both ports; flags select what runs:</p>
 
-            <h2>Environment Variables</h2>
-            <p>You can override configuration settings using environment variables:</p>
-
-            <pre><code># Server Configuration
-NJUKEBOX_PORT=3000
-NJUKEBOX_HOST=0.0.0.0
-NJUKEBOX_ADMIN_PIN=secretpin123
-
-# Spotify Configuration
-SPOTIFY_CLIENT_ID=your_spotify_client_id
-SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
-
-# Database Configuration
-DATABASE_PATH=./data/custom_location.db
-MUSIC_DATABASE_PATH=./data/custom_music.db
-
-# Audio Configuration
-DEFAULT_VOLUME=0.8
-TRACK_LOCK_TIME=15
-AUTO_DJ=true
-
-# Development Mode
-DEBUG=true
-NODE_ENV=development</code></pre>
-
-            <div class="info">
-                <strong>Environment Priority:</strong> Environment variables take precedence over config.json settings, making them ideal for deployment-specific configurations.
-            </div>
+            <pre><code>./njukebox                 # web server on :5500 and data server on :3001
+./njukebox --data-only     # only the data server
+./njukebox --web-only      # only the web server
+./njukebox --root &lt;path&gt;   # use another project directory</code></pre>
 
             <h2>Network Configuration</h2>
 
@@ -495,15 +379,19 @@ NODE_ENV=development</code></pre>
 
             <ol>
                 <li>Set <code>host</code> to <code>0.0.0.0</code> in config.json</li>
-                <li>Configure your firewall to allow port 3000</li>
-                <li>Access using your computer's IP address: <code>http://192.168.1.100:3000</code></li>
+                <li>Configure your firewall to allow ports 5500 and 3001</li>
+                <li>Access using your computer's IP address: <code>http://192.168.1.100:5500</code></li>
             </ol>
 
+            <div class="warning">
+                <strong>Note:</strong> Spotify login only works via <code>http://127.0.0.1:5500</code> &mdash; Spotify accepts unencrypted HTTP redirect URIs only for the loopback address.
+            </div>
+
             <h3>Port Configuration</h3>
-            <p>If port 3000 is in use, change it in multiple places:</p>
+            <p>If port 5500 or 3001 is in use, change it in multiple places:</p>
 
             <ul>
-                <li><strong>config.json:</strong> Update the <code>port</code> setting</li>
+                <li><strong>config.json:</strong> Update the <code>webPort</code> or <code>dataPort</code> setting</li>
                 <li><strong>Spotify redirect URI:</strong> Update in Spotify Developer Dashboard</li>
                 <li><strong>Batch files:</strong> Update any startup scripts</li>
             </ul>
@@ -516,7 +404,7 @@ NODE_ENV=development</code></pre>
     server_name your-domain.com;
 
     location / {
-        proxy_pass http://localhost:3000;
+        proxy_pass http://127.0.0.1:5500;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';
@@ -552,7 +440,7 @@ cp data/*.db backup/$(date +%Y%m%d)/</code></pre>
 
             <ol>
                 <li>Copy the entire <code>data/</code> directory</li>
-                <li>Update file paths in config.json if needed</li>
+                <li>Start the binary with <code>--root &lt;path&gt;</code> if the project lives elsewhere</li>
                 <li>Run a library rescan to update paths</li>
             </ol>
 
@@ -686,16 +574,16 @@ class CustomEffect {
 }</code></pre>
 
             <h3>Custom API Endpoints</h3>
-            <p>Extend the API by adding custom routes:</p>
+            <p>Extend the API by adding custom routes to the Go server (<code>internal/api/</code>), then rebuild the binary:</p>
 
-            <pre><code>// In jukebox_server.js
-app.get('/api/custom/stats', (req, res) => {
+            <pre><code>// In internal/api/
+mux.HandleFunc("/api/custom/stats", func(w http.ResponseWriter, r *http.Request) {
     // Custom statistics endpoint
-    res.json({
-        totalPlays: getTotalPlays(),
-        topGenres: getTopGenres()
-    });
-});</code></pre>
+    json.NewEncoder(w).Encode(map[string]any{
+        "totalPlays": totalPlays,
+        "topGenres":  topGenres,
+    })
+})</code></pre>
 
             <div class="success">
                 <strong>Customization Tip:</strong> Keep custom modifications in separate files when possible to make updating easier while preserving your customizations.
@@ -703,219 +591,116 @@ app.get('/api/custom/stats', (req, res) => {
 
             <h2>Deployment Configurations</h2>
 
-            <h3>Development Environment</h3>
-            <pre><code>{
-  "app": {
-    "port": 3000,
-    "host": "localhost",
-    "adminPin": "1234"
-  },
-  "audio": {
-    "trackLockTime": 1
-  },
-  "debug": true
-}</code></pre>
+            <h3>Development</h3>
+            <p>Same server, but a normal resizable browser window with DevTools already open and a separate browser profile:</p>
+            <pre><code>dev.cmd</code></pre>
 
-            <h3>Production Environment</h3>
+            <h3>Kiosk Mode</h3>
+            <p>Start opens the interface in a kiosk browser; stop ends the server and that browser window:</p>
+            <pre><code># Windows
+start_jukebox.bat
+stop_jukebox.cmd
+
+# Linux/macOS
+./start_jukebox.sh
+./stop_jukebox.sh</code></pre>
+
+            <h3>Network Access</h3>
             <pre><code>{
-  "app": {
-    "port": 8080,
+  "server": {
     "host": "0.0.0.0",
-    "adminPin": "secure_pin_here"
-  },
-  "audio": {
-    "trackLockTime": 10
-  },
-  "reporting": {
-    "enabled": true,
-    "logDetail": "essential"
-  },
-  "debug": false
-}</code></pre>
-
-            <h3>Party/Event Configuration</h3>
-            <pre><code>{
-  "audio": {
-    "trackLockTime": 30,
-    "autoDJ": true,
-    "maxPlaylistSize": 50
-  },
-  "visualization": {
-    "enabled": true,
-    "switchInterval": 15
-  },
-  "reporting": {
-    "gemaCompliance": true
+    "webPort": 5500,
+    "dataPort": 3001
   }
 }</code></pre>
 
             <div class="info">
-                <strong>Configuration Management:</strong> Consider using different config files for different environments and switching between them with environment variables or startup scripts.
+                <strong>Configuration Management:</strong> A missing config.json simply falls back to the defaults &mdash; only ship one when you deviate from them.
             </div>
         </div>
 
         <div class="doc-content" data-lang="de" style="display: none;">
             <h2>Konfigurationsdateien</h2>
-            <p>nJukebox verwendet mehrere Konfigurationsdateien zur Anpassung von Verhalten und Einstellungen:</p>
+            <p>Die Go-Version von nJukebox kommt mit einer einzigen, kleinen Konfigurationsdatei aus:</p>
 
             <div class="file-structure">
 <span class="folder">nJukebox/</span>
-├── <span class="file">config.json</span>           # Haupt-Anwendungskonfiguration
-├── <span class="file">package.json</span>          # Node.js Abhängigkeiten und Skripte
-├── <span class="folder">data/</span>
-│   ├── <span class="file">app.db</span>             # Anwendungsdatenbank (SQLite)
-│   ├── <span class="file">music.db</span>           # Musikbibliothek-Datenbank
-│   └── <span class="file">custom_playlists.json</span> # Gespeicherte benutzerdefinierte Playlists
-├── <span class="folder">locales/</span>
-│   ├── <span class="file">en.json</span>            # Englische Übersetzungen
-│   └── <span class="file">de.json</span>            # Deutsche Übersetzungen
-└── <span class="folder">lib/</span>
-    └── <span class="file">valid_genres.js</span>    # Unterstützte Musikgenres
+├── <span class="file">config.json</span>           # Server-Konfiguration (Host und Ports)
+├── <span class="file">njukebox</span>              # Kompiliertes Go-Binary (njukebox.exe unter Windows)
+├── <span class="folder">cmd/njukebox/</span>        # Go-Einstiegspunkt
+├── <span class="folder">internal/</span>            # Go-Server-Implementierung
+├── <span class="folder">web/</span>                 # Alles, was der Browser lädt
+│   ├── <span class="file">jukebox.html</span>  <span class="file">style.css</span>  <span class="file">jukebox.js</span>
+│   └── <span class="folder">js/</span>  <span class="folder">assets/</span>  <span class="folder">locales/</span>
+├── <span class="folder">music/</span>               # Lokale Musikbibliothek
+└── <span class="folder">data/</span>
+    ├── <span class="file">app.db</span>             # Queue, Session, Einstellungen, Spotify-Tokens
+    └── <span class="file">music.db</span>           # Musikbibliothek-Datenbank
             </div>
 
             <h2>Hauptkonfiguration (config.json)</h2>
-            <p>Die Hauptkonfigurationsdatei enthält zentrale Anwendungseinstellungen:</p>
+            <p>Die Konfigurationsdatei umfasst nur die Server-Adressen. Eine fehlende config.json ist in Ordnung &mdash; dann gelten die folgenden Standardwerte:</p>
 
             <pre><code>{
-  "app": {
-    "port": 3000,
-    "host": "localhost",
-    "adminPin": "1234",
-    "sessionTimeout": 3600,
-    "maxPlaylistSize": 100
-  },
-  "audio": {
-    "defaultVolume": 0.8,
-    "fadeTime": 3000,
-    "trackLockTime": 10,
-    "autoDJ": true
-  },
-  "spotify": {
-    "clientId": "",
-    "clientSecret": "",
-    "redirectUri": "http://localhost:3000/spotify_login.html"
-  },
-  "database": {
-    "path": "./data/",
-    "backupInterval": 86400
-  },
-  "localization": {
-    "defaultLanguage": "de",
-    "availableLanguages": ["de", "en"]
+  "server": {
+    "host": "127.0.0.1",
+    "webPort": 5500,
+    "dataPort": 3001
   }
 }</code></pre>
 
             <h2>Wichtige Einstellungen</h2>
 
-            <h3>Anwendungseinstellungen (app)</h3>
+            <h3>Server-Einstellungen (server)</h3>
             <ul>
-                <li><strong>port:</strong> HTTP-Port für die Web-Oberfläche (Standard: 3000)</li>
-                <li><strong>host:</strong> Hostname zum Binden des Servers</li>
-                <li><strong>adminPin:</strong> PIN für Admin-Panel Zugriff (BITTE ÄNDERN!)</li>
-                <li><strong>sessionTimeout:</strong> Session-Timeout in Sekunden</li>
-                <li><strong>maxPlaylistSize:</strong> Maximale Anzahl Tracks in der Playlist</li>
+                <li><strong>host:</strong> Bind-Adresse (Standard: 127.0.0.1; für Netzwerkzugriff 0.0.0.0)</li>
+                <li><strong>webPort:</strong> Port der Web-Oberfläche (Standard: 5500)</li>
+                <li><strong>dataPort:</strong> Port des Datenservers / REST-API (Standard: 3001)</li>
             </ul>
 
-            <h3>Audio-Einstellungen (audio)</h3>
+            <h3>Laufzeit-Einstellungen (Admin-Panel)</h3>
+            <p>Alle übrigen Einstellungen werden zur Laufzeit im Admin-Panel konfiguriert und in der Einstellungs-Datenbank (<code>data/app.db</code>) gespeichert:</p>
             <ul>
-                <li><strong>defaultVolume:</strong> Standard-Lautstärke (0.0 - 1.0)</li>
-                <li><strong>fadeTime:</strong> Übergangszeit zwischen Tracks in Millisekunden</li>
-                <li><strong>trackLockTime:</strong> Zeit in Minuten, bevor ein Track erneut gespielt werden kann</li>
-                <li><strong>autoDJ:</strong> Automatisches Hinzufügen von Tracks wenn Playlist leer</li>
-            </ul>
-
-            <h3>Spotify-Einstellungen (spotify)</h3>
-            <ul>
-                <li><strong>clientId:</strong> Ihre Spotify Developer App Client ID</li>
-                <li><strong>redirectUri:</strong> Callback-URL für Spotify-Autorisierung</li>
+                <li><strong>Admin-PIN</strong> (Standard: 1234 &mdash; BITTE ÄNDERN!)</li>
+                <li><strong>Sprache</strong> (Deutsch / Englisch)</li>
+                <li><strong>Auto-DJ</strong> und Track-Sperrzeit</li>
+                <li><strong>Visualisierungs-Effekte</strong> und Theming</li>
+                <li><strong>Spotify Client ID</strong> und Login</li>
             </ul>
 
             <div class="warning">
-                <strong>Sicherheit:</strong> Teilen Sie niemals Ihre Spotify Client ID und Secrets öffentlich. Bewahren Sie config.json sicher auf.
+                <strong>Hinweis:</strong> Die Spotify-Authentifizierung nutzt PKCE &mdash; ein Client Secret wird nicht benötigt und sollte nirgends hinterlegt werden. Die Tokens verwaltet der Server selbst und erneuert sie im Hintergrund.
             </div>
 
-            <h2>Umgebungsvariablen</h2>
-            <p>Sie können Konfigurationseinstellungen mit Umgebungsvariablen überschreiben:</p>
+            <h2>Kommandozeilen-Flags</h2>
+            <p>Ein Binary bedient beide Ports; Flags bestimmen, was läuft:</p>
 
-            <pre><code># Windows (PowerShell)
-$env:NJUKEBOX_PORT = "8080"
-$env:NJUKEBOX_ADMIN_PIN = "5678"
-npm start
-
-# Linux/Mac
-export NJUKEBOX_PORT=8080
-export NJUKEBOX_ADMIN_PIN=5678
-npm start</code></pre>
+            <pre><code>./njukebox                 # Webserver auf :5500 und Datenserver auf :3001
+./njukebox --data-only     # nur der Datenserver
+./njukebox --web-only      # nur der Webserver
+./njukebox --root &lt;pfad&gt;   # anderes Projektverzeichnis verwenden</code></pre>
 
             <h2>Erweiterte Konfiguration</h2>
 
             <h3>Musikverzeichnis</h3>
-            <p>Standardmäßig scannt nJukebox das <code>music/</code> Verzeichnis. Sie können dies ändern:</p>
-
-            <pre><code>{
-  "music": {
-    "directories": [
-      "/pfad/zu/musik/ordner1",
-      "/pfad/zu/musik/ordner2"
-    ],
-    "scanInterval": 3600,
-    "supportedFormats": ["mp3"]
-  }
-}</code></pre>
+            <p>nJukebox scannt das <code>music/</code>-Verzeichnis im Projektordner beim Start und überwacht es im laufenden Betrieb. Unterstützt werden MP3- und FLAC-Dateien. Ein anderes Projektverzeichnis lässt sich mit <code>--root &lt;pfad&gt;</code> wählen.</p>
 
             <h3>Visualisierungen</h3>
-            <pre><code>{
-  "visualization": {
-    "enabled": true,
-    "switchInterval": 15,
-    "effects": {
-      "space": true,
-      "fire": true,
-      "particles": true,
-      "circles": true
-    }
-  }
-}</code></pre>
-
-            <h3>Reporting & GEMA</h3>
-            <pre><code>{
-  "reporting": {
-    "gemaCompliance": true,
-    "eventLogging": true,
-    "exportFormat": "csv",
-    "archiveOldReports": true
-  }
-}</code></pre>
+            <p>Die Visualisierungs-Effekte (Space, Fire, Particles, Circles) werden im Admin-Panel aktiviert und konfiguriert &mdash; nicht in config.json.</p>
 
             <h2>Vollständiges Beispiel</h2>
-            <p>Eine vollständig konfigurierte config.json für einen Produktions-Server:</p>
+            <p>Eine config.json für Zugriff aus dem lokalen Netzwerk:</p>
 
             <pre><code>{
-  "app": {
-    "port": 3000,
+  "server": {
     "host": "0.0.0.0",
-    "adminPin": "IHR_SICHERER_PIN",
-    "sessionTimeout": 3600,
-    "maxPlaylistSize": 100
-  },
-  "audio": {
-    "defaultVolume": 0.7,
-    "fadeTime": 2000,
-    "trackLockTime": 30,
-    "autoDJ": true,
-    "maxPlaylistSize": 50
-  },
-  "visualization": {
-    "enabled": true,
-    "switchInterval": 15
-  },
-  "reporting": {
-    "gemaCompliance": true
+    "webPort": 5500,
+    "dataPort": 3001
   }
 }</code></pre>
 
             <div class="info">
-                <strong>Konfigurations-Management:</strong> Erwägen Sie verschiedene Config-Dateien für verschiedene Umgebungen und wechseln Sie zwischen ihnen mit Umgebungsvariablen oder Startskripten.
+                <strong>Konfigurations-Management:</strong> Eine fehlende config.json fällt einfach auf die Standardwerte zurück &mdash; legen Sie nur dann eine an, wenn Sie davon abweichen.
             </div>
         </div>
         </div>

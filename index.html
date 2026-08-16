@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>nJukebox - Modern Touchscreen Music System</title>
-    <meta name="description" content="A modern, web-based jukebox system with Spotify integration, admin controls, and multi-language support. Built with Node.js for dedicated hardware jukeboxes and touch displays.">
-    <meta name="keywords" content="jukebox, music system, touchscreen, Spotify, Node.js, web-based jukebox, music player, MP3 player, party music, event music">
+    <meta name="description" content="A modern, web-based jukebox system with Spotify integration, admin controls, and multi-language support. Written in Go as a single binary for dedicated hardware jukeboxes and touch displays.">
+    <meta name="keywords" content="jukebox, music system, touchscreen, Spotify, Go, golang, web-based jukebox, music player, MP3 player, party music, event music">
     <meta name="author" content="Nigcra">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-language" content="en, de">
@@ -78,7 +78,8 @@
                         <span class="title-prefix">Modern</span><br>Touchscreen <span class="gradient-text">Jukebox</span>
                     </h1>
                     <p class="hero-subtitle">
-                        A web-based music system designed specifically for large touch displays. Combines local MP3 collections with Spotify streaming. 
+                        A web-based music system designed specifically for large touch displays. Combines local MP3 and FLAC collections with Spotify streaming.
+                        Now completely rewritten in Go &mdash; a single fast binary with no runtime dependencies.
                         Built for dedicated hardware jukeboxes, events, and kiosk-style music stations.
                     </p>
                     <div class="disclaimer">
@@ -105,7 +106,8 @@
                         <span class="title-prefix">Moderne</span><br>Touchscreen <span class="gradient-text">Jukebox</span>
                     </h1>
                     <p class="hero-subtitle">
-                        Ein webbasiertes Musiksystem, speziell für große Touch-Displays entwickelt. Kombiniert lokale MP3-Sammlungen mit Spotify-Streaming. 
+                        Ein webbasiertes Musiksystem, speziell für große Touch-Displays entwickelt. Kombiniert lokale MP3- und FLAC-Sammlungen mit Spotify-Streaming.
+                        Jetzt komplett in Go neu geschrieben &mdash; ein einzelnes, schnelles Binary ohne Laufzeitabhängigkeiten.
                         Gebaut für dedizierte Hardware-Jukeboxes, Veranstaltungen und Kiosk-Style Musikstationen.
                     </p>
                     <div class="disclaimer">
@@ -451,11 +453,11 @@
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Install Dependencies</h3>
-                        <p>Install Node.js dependencies for the backend server</p>
+                        <h3>Build the Binary</h3>
+                        <p>Compile the single Go binary — Go is only needed to build</p>
                         <div class="code-block">
-                            <code>cd jukebox && npm install</code>
-                            <button class="copy-btn" onclick="copyToClipboard('cd jukebox && npm install')">
+                            <code>cd nJukebox && go build -o njukebox ./cmd/njukebox</code>
+                            <button class="copy-btn" onclick="copyToClipboard('cd nJukebox && go build -o njukebox ./cmd/njukebox')">
                                 📋
                             </button>
                         </div>
@@ -466,7 +468,7 @@
                     <div class="step-number">3</div>
                     <div class="step-content">
                         <h3>Add Your Music</h3>
-                        <p>Place your MP3 files in the <code>music/</code> directory</p>
+                        <p>Place your MP3 and FLAC files in the <code>music/</code> directory</p>
                         <div class="code-block">
                             <code>cp /path/to/your/music/* ./music/</code>
                             <button class="copy-btn" onclick="copyToClipboard('cp /path/to/your/music/* ./music/')">
@@ -480,10 +482,10 @@
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h3>Start the System</h3>
-                        <p>Launch both the data server and web interface</p>
+                        <p>One binary serves both the web interface and the data server</p>
                         <div class="code-block">
-                            <code>npm run start</code>
-                            <button class="copy-btn" onclick="copyToClipboard('npm run start')">
+                            <code>./njukebox</code>
+                            <button class="copy-btn" onclick="copyToClipboard('./njukebox')">
                                 📋
                             </button>
                         </div>
@@ -509,11 +511,11 @@
                 <div class="step">
                     <div class="step-number">2</div>
                     <div class="step-content">
-                        <h3>Abhängigkeiten installieren</h3>
-                        <p>Installiere Node.js-Abhängigkeiten für den Backend-Server</p>
+                        <h3>Binary bauen</h3>
+                        <p>Kompiliere das einzelne Go-Binary — Go wird nur zum Bauen benötigt</p>
                         <div class="code-block">
-                            <code>cd jukebox && npm install</code>
-                            <button class="copy-btn" onclick="copyToClipboard('cd jukebox && npm install')">
+                            <code>cd nJukebox && go build -o njukebox ./cmd/njukebox</code>
+                            <button class="copy-btn" onclick="copyToClipboard('cd nJukebox && go build -o njukebox ./cmd/njukebox')">
                                 📋
                             </button>
                         </div>
@@ -524,7 +526,7 @@
                     <div class="step-number">3</div>
                     <div class="step-content">
                         <h3>Musik hinzufügen</h3>
-                        <p>Platziere deine MP3-Dateien im <code>music/</code> Verzeichnis</p>
+                        <p>Platziere deine MP3- und FLAC-Dateien im <code>music/</code> Verzeichnis</p>
                         <div class="code-block">
                             <code>cp /pfad/zu/deiner/musik/* ./music/</code>
                             <button class="copy-btn" onclick="copyToClipboard('cp /pfad/zu/deiner/musik/* ./music/')">
@@ -538,10 +540,10 @@
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h3>System starten</h3>
-                        <p>Starte sowohl den Datenserver als auch die Web-Oberfläche</p>
+                        <p>Ein Binary startet Web-Oberfläche und Datenserver zugleich</p>
                         <div class="code-block">
-                            <code>npm run start</code>
-                            <button class="copy-btn" onclick="copyToClipboard('npm run start')">
+                            <code>./njukebox</code>
+                            <button class="copy-btn" onclick="copyToClipboard('./njukebox')">
                                 📋
                             </button>
                         </div>
@@ -786,8 +788,8 @@
                 <p data-lang="en">Made with ❤️ for music lovers everywhere</p>
                 <p data-lang="de" style="display: none;">Mit ❤️ gemacht für Musikliebhaber überall</p>
                 <p style="font-size: 0.85em; opacity: 0.6; margin-top: 10px;">
-                    <span data-lang="en"><em>nJukebox stands for "Node.js Jukebox"</em></span>
-                    <span data-lang="de" style="display: none;"><em>nJukebox steht für "Node.js Jukebox"</em></span>
+                    <span data-lang="en"><em>nJukebox stands for "Nico's Jukebox" &mdash; now written in Go</em></span>
+                    <span data-lang="de" style="display: none;"><em>nJukebox steht für "Nico's Jukebox" &mdash; jetzt in Go geschrieben</em></span>
                 </p>
             </div>
         </div>
